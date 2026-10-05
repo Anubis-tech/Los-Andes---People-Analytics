@@ -1,458 +1,198 @@
-<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><style>body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style></head><body><title>Reclutamiento Los Andes</title>
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><style>body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style></head><body>
+<title>Postulaciones Los Andes</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Source+Serif+4:opsz,wght@8..60,400&display=swap">
 <style>
-/* Layout: tablero por pestañas para gerentes. Pestañas fijas arriba, barra compacta de filtros, y una sola tarjeta por pestaña:
-   titular con el hallazgo, botones de vista, un gráfico y, al tocar, el detalle con nombres. Un solo aspecto claro (sin modo oscuro, por decisión de diseño). */
+/* Layout: móvil primero. Una columna de 560px: encabezado, tarjeta del formulario, tarjeta de registros guardados. */
 :root{
-  --canvas:#f6f5f4; --card:#ffffff; --line:rgba(0,0,0,.08); --line-strong:rgba(0,0,0,.2);
+  --canvas:#f6f5f4; --card:#ffffff; --line:rgba(0,0,0,.08);
   --ink:#000000; --ink95:rgba(0,0,0,.95); --ink60:rgba(0,0,0,.6); --body:#615d59;
-  --blue:#0075de; --blue-text:#005bab; --sky-tint:#e6f3fe; --marigold:#ffb110; --coral:#f64932; --sky:#62aef0; --midnight:#02093a;
-  --s1:#e6f3fe; --s2:#add4f6; --s3:#73b4ee; --s4:#3a95e6; --s5:#0075de;
+  --blue:#0075de; --sky-tint:#e6f3fe; --marigold:#ffb110; --coral:#f64932; --midnight:#02093a; --err:#b3200c;
   --sans:'Inter',ui-sans-serif,system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
   --serif:'Source Serif 4','Source Serif Pro',Georgia,'Times New Roman',serif;
   color-scheme:light;
 }
 *{box-sizing:border-box}
 body{background:var(--canvas);color:var(--body);font:400 16px/1.5 var(--sans);font-feature-settings:"lnum";margin:0}
-.wrap{max-width:1040px;margin:0 auto;padding-inline:16px;padding-block:24px 64px;display:flex;flex-direction:column;gap:16px}
-h1,h2,h3,p,ul,ol{margin:0}
-ul,ol{padding:0;list-style:none}
-h1{font:700 28px/1.2 var(--sans);letter-spacing:-.02em;color:var(--ink);text-wrap:balance}
+.wrap{max-width:592px;margin:0 auto;padding-inline:16px;padding-block:24px 64px;display:flex;flex-direction:column;gap:40px}
+h1,h2,p{margin:0}
+h1{font:700 32px/1.2 var(--sans);letter-spacing:-.02em;color:var(--ink);text-wrap:balance}
+h1 mark{background:var(--marigold);color:#000;border-radius:9999px;padding:2px 14px}
+.lede{font:400 18px/1.56 var(--serif);color:var(--body)}
 .eyebrow{font:500 12px/1.33 var(--sans);letter-spacing:.06em;text-transform:uppercase;color:var(--ink60)}
-.lede{font:400 18px/1.56 var(--serif);color:var(--body);max-width:62ch}
-.hero{display:flex;flex-direction:column;gap:8px;margin-bottom:8px}
-.hero-top{display:flex;flex-direction:column;gap:12px}
-button,select{font-family:var(--sans)}
-button:focus-visible,select:focus-visible,summary:focus-visible,[tabindex]:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
-
-/* pestañas */
-.tabs{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--canvas);margin-inline:-16px;padding:8px 16px;border-bottom:1px solid var(--line);overflow-x:auto;scrollbar-width:none}
-.tabs::-webkit-scrollbar{display:none}
-.tabs div{display:flex;gap:4px;width:max-content}
-.tab{min-height:44px;padding:8px 14px;border:1px solid transparent;border-radius:8px;background:transparent;font:500 14px/1.43 var(--sans);color:var(--ink60);cursor:pointer;white-space:nowrap;transition:background 200ms ease,color 200ms ease}
-.tab:hover{color:var(--ink)}
-.tab[aria-selected=true]{background:var(--card);border-color:var(--line-strong);color:var(--ink);font-weight:600}
-
-/* filtros */
-.filters{display:flex;flex-direction:column;gap:8px}
-.fgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
-.fgrid select{width:100%;min-height:44px;padding:8px 32px 8px 12px;border:1px solid var(--line-strong);border-radius:8px;background:var(--card) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' fill='none' stroke='%23000' stroke-width='1.6'/%3E%3C/svg%3E") no-repeat right 12px center;appearance:none;-webkit-appearance:none;font:500 14px/1.43 var(--sans);color:var(--ink95);text-overflow:ellipsis;cursor:pointer;transition:border-color 200ms ease,background-color 200ms ease}
-.fgrid select.on{border-color:var(--blue);background-color:var(--sky-tint);color:var(--blue-text);font-weight:600}
-.fstate{display:flex;flex-wrap:wrap;gap:8px;align-items:center;min-height:44px;font-size:14px;line-height:1.43;color:var(--ink95)}
-.fstate b{font-weight:600;color:var(--ink)}
-
-/* botones */
-.btn{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:6px 15px;border-radius:8px;border:0;font:500 14px/1.43 var(--sans);cursor:pointer;transition:background 200ms ease}
-.btn.primary{background:var(--blue);color:#fff;text-decoration:none;align-self:flex-start}
-.btn.primary:hover{background:#0067c4}
-.btn.ghost{background:var(--sky-tint);color:var(--blue-text)}
-.btn.ghost:hover{background:#d3e9fd}
-.btn.text{background:transparent;color:var(--ink95);padding-inline:8px}
-.btn.text:hover{background:rgba(0,0,0,.05)}
-.seg{display:flex;gap:4px;flex-wrap:wrap}
-.seg.scroll{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;margin-inline:-16px;padding-inline:16px}
-.seg.scroll::-webkit-scrollbar{display:none}
-.seg button{min-height:44px;padding:6px 14px;border-radius:8px;border:1px solid var(--line-strong);background:var(--card);font:500 14px/1.43 var(--sans);color:var(--ink95);cursor:pointer;white-space:nowrap;transition:background 200ms ease,border-color 200ms ease}
-.seg button:hover{border-color:rgba(0,0,0,.5)}
-.seg button[aria-pressed=true]{background:var(--sky-tint);border-color:var(--blue);color:var(--blue-text);font-weight:600}
-.ctl{display:flex;flex-direction:column;gap:8px}
-.ctl-lab{font:500 12px/1.33 var(--sans);letter-spacing:.01em;color:var(--ink60)}
-
-/* píldoras */
-.pill{display:inline-flex;align-items:center;border-radius:9999px;padding:4px 12px;font:500 12px/1.33 var(--sans);letter-spacing:.01em;background:rgba(0,0,0,.06);color:var(--ink95);white-space:nowrap}
-.pill.hired{background:var(--marigold);color:#000}
-.pill.rej{background:var(--coral);color:#000}
-.pill.open{background:var(--sky-tint);color:var(--blue-text)}
-.pill.x{padding-right:6px;gap:2px;background:var(--midnight);color:#fff}
-.pill.x button{border:0;background:none;color:#fff;font:600 14px/1 var(--sans);cursor:pointer;min-width:28px;min-height:28px;border-radius:9999px}
-
-/* tarjeta */
+header{display:flex;flex-direction:column;gap:12px}
 .card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px;display:flex;flex-direction:column;gap:16px;min-width:0}
-.card h2{font:700 20px/1.27 var(--sans);letter-spacing:-.011em;color:var(--ink);text-wrap:balance}
-.sub{font:400 18px/1.5 var(--serif);color:var(--body);max-width:62ch}
-.note{font-size:14px;line-height:1.43;color:var(--body);max-width:70ch}
-.empty{padding:16px 0;color:var(--body);font-size:16px}
-
-/* resumen */
-.kpis{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
-.kpi{border:1px solid var(--line);border-radius:12px;padding:16px;display:flex;flex-direction:column;gap:4px;min-width:0}
-.kpi b{font:700 36px/1.15 var(--sans);letter-spacing:-.02em;color:var(--ink);font-variant-numeric:tabular-nums}
-.kpi span{font:600 14px/1.43 var(--sans);color:var(--ink95)}
-.kpi small{font-size:12px;line-height:1.33;color:var(--body)}
-.kpi.accent{background:var(--marigold);border-color:transparent}
-.kpi.accent small{color:#000}
-.nav{display:grid;grid-template-columns:minmax(0,1fr);gap:8px}
-.nav button{display:flex;flex-direction:column;align-items:flex-start;gap:2px;min-height:64px;padding:10px 15px;border-radius:8px;border:0;background:var(--sky-tint);color:var(--blue-text);text-align:left;cursor:pointer;transition:background 200ms ease}
-.nav button:hover{background:#d3e9fd}
-.nav button b{font:600 16px/1.5 var(--sans)}
-.nav button span{font:400 14px/1.43 var(--sans);color:var(--ink95)}
-
-/* barras */
-.bars{display:flex;flex-direction:column;gap:6px}
-.row{display:grid;grid-template-columns:minmax(0,1fr);gap:4px;width:100%;border:0;background:none;padding:8px;margin:0;text-align:left;border-radius:8px;font:inherit;color:inherit;cursor:pointer;transition:background 200ms ease}
-.row:hover{background:var(--canvas)}
-.row[aria-pressed=true]{background:var(--sky-tint)}
-.row .lab{font:500 14px/1.43 var(--sans);color:var(--ink)}
-.row .val{font-size:14px;line-height:1.43;color:var(--body);font-variant-numeric:tabular-nums}
-.row .val b{font-weight:600;color:var(--ink)}
-.track{display:flex;gap:2px;height:28px;min-width:0}
-.bar{display:flex;align-items:center;justify-content:center;min-width:26px;border-radius:4px;font:600 12px/1 var(--sans);font-variant-numeric:tabular-nums;background:var(--blue);color:#fff;transition:flex-grow 200ms ease}
-.bar.g-m{background:var(--blue);color:#fff}
-.bar.g-f{background:var(--marigold);color:#000}
-.bar.g-i{background:var(--midnight);color:#fff}
-.bar.rest{background:var(--sky-tint);color:var(--blue-text);box-shadow:inset 0 0 0 1px rgba(0,117,222,.4)}
-.bar.worst{background:var(--coral);color:#000}
-.bar.slim{min-width:4px}
-.legend{display:flex;flex-wrap:wrap;gap:6px 16px;font-size:14px;line-height:1.43;color:var(--ink95)}
-.legend i{display:inline-block;width:12px;height:12px;border-radius:3px;margin-right:6px;vertical-align:-1px}
-.legend i.rest{background:var(--sky-tint);box-shadow:inset 0 0 0 1px rgba(0,117,222,.4)}
-
-/* grupos (candidatos alternativos) */
-.group{display:flex;flex-direction:column;gap:2px}
-.group+.group{border-top:1px solid var(--line);padding-top:12px}
-.ghead{display:flex;flex-wrap:wrap;align-items:center;gap:8px;padding-inline:8px}
-.ghead h3{font:600 16px/1.5 var(--sans);color:var(--ink)}
-.group .none{padding:4px 8px;font-size:14px;line-height:1.43;color:var(--body)}
-
-/* contratados */
-.hires{display:flex;flex-direction:column;gap:2px}
-.hire{display:grid;grid-template-columns:28px minmax(0,1fr);gap:4px 8px;align-items:start}
-.hire .ord{font:700 16px/1.5 var(--sans);color:var(--ink);font-variant-numeric:tabular-nums}
-.hire .who{display:flex;flex-direction:column;gap:2px;min-width:0}
-.hire .who b{font:600 16px/1.5 var(--sans);color:var(--ink)}
-.hire .who span{font-size:14px;line-height:1.43;color:var(--body)}
-.steps{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
-.steps li{border:1px solid var(--line);border-radius:8px;padding:8px 12px;display:flex;flex-direction:column;gap:2px;font-size:14px;line-height:1.43}
-.steps li span{color:var(--body)}
-.steps li b{font-weight:600;color:var(--ink);font-variant-numeric:tabular-nums}
-
-/* mapa */
-.map-grid{display:grid;grid-template-columns:minmax(0,1fr);gap:16px;align-items:start}
-.map svg{width:100%;height:auto;max-width:440px;display:block;margin:0 auto}
-.map path{stroke:rgba(0,0,0,.35);stroke-width:.8;transition:fill 200ms ease}
-.map path.has{cursor:pointer}
-.map path.has:hover,.map path.sel{stroke:#000;stroke-width:1.8}
-.map text{font-family:var(--sans);text-anchor:middle;pointer-events:none}
-.map .nm{font-size:10.5px;font-weight:500}
-.map .ct{font-size:17px;font-weight:700}
-.scale{display:flex;flex-wrap:wrap;gap:6px 10px;font-size:12px;line-height:1.33;color:var(--ink95);align-items:center;justify-content:center;margin-top:8px}
-.scale i{display:inline-block;width:18px;height:12px;border-radius:3px;margin-right:4px;vertical-align:-2px;border:1px solid var(--line-strong)}
-
-/* detalle con nombres */
-.detail{border-top:1px solid var(--line);padding-top:16px;display:flex;flex-direction:column;gap:12px}
-.detail.hint{border:1px dashed var(--line-strong);border-radius:8px;padding:12px 16px;font-size:14px;line-height:1.43;color:var(--ink60)}
-.dhead{display:flex;justify-content:space-between;align-items:flex-start;gap:8px}
-.dhead h3{font:700 18px/1.3 var(--sans);color:var(--ink);text-wrap:balance;padding-top:10px}
-.dgroup{font:500 12px/1.33 var(--sans);letter-spacing:.06em;text-transform:uppercase;color:var(--ink60)}
-.people{display:grid;grid-template-columns:minmax(0,1fr);gap:0 24px}
-.people li{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid var(--line);min-width:0}
-.people li div{display:flex;flex-direction:column;min-width:0}
-.people li b{font:600 14px/1.43 var(--sans);color:var(--ink)}
-.people li small{font-size:12px;line-height:1.33;color:var(--body)}
-.people li .n{font:600 14px/1.43 var(--sans);color:var(--ink);white-space:nowrap;font-variant-numeric:tabular-nums}
-
-/* recomendaciones */
-.recs{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:4px 16px}
-.recs summary{cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center;gap:12px;min-height:52px;font:700 18px/1.3 var(--sans);color:var(--ink);border-radius:8px}
-.recs summary::-webkit-details-marker{display:none}
-.recs summary span{font:500 14px/1.43 var(--sans);color:var(--blue-text);white-space:nowrap}
-.recs summary span::after{content:'Ver'}
-.recs[open] summary span::after{content:'Ocultar'}
-.recs ol{display:flex;flex-direction:column;padding-bottom:12px}
-.recs li{display:grid;grid-template-columns:28px minmax(0,1fr);gap:2px 8px;padding:12px 0;border-top:1px solid var(--line)}
-.recs li i{font:700 16px/1.5 var(--sans);font-style:normal;color:var(--ink);font-variant-numeric:tabular-nums}
-.recs li b{font:600 16px/1.5 var(--sans);color:var(--ink)}
-.recs li p{grid-column:2;font-size:14px;line-height:1.5;color:var(--body);max-width:70ch}
-.recs .note{padding-bottom:12px}
-
-@media (min-width:720px){
-  .wrap{padding-inline:32px;gap:20px}
-  h1{font-size:40px;line-height:1.15}
-  .hero-top{flex-direction:row;justify-content:space-between;align-items:center;gap:24px}
-  .btn.primary{align-self:center;flex:none}
-  .tabs{margin-inline:-32px;padding-inline:32px}
-  .fgrid{grid-template-columns:repeat(4,minmax(0,1fr))}
-  .card{padding:24px;gap:20px}
-  .card h2{font-size:22px}
-  .kpis{grid-template-columns:repeat(4,minmax(0,1fr))}
-  .kpi b{font-size:40px}
-  .nav{grid-template-columns:repeat(3,minmax(0,1fr))}
-  .seg.scroll{flex-wrap:wrap;overflow:visible;margin-inline:0;padding-inline:0}
-  .row.wide{grid-template-columns:230px minmax(0,1fr);align-items:center;gap:4px 16px}
-  .row.wide .lab{grid-row:1 / span 2}
-  .row.wide .val{grid-column:2}
-  .map-grid{grid-template-columns:minmax(0,5fr) minmax(0,6fr)}
-  .people{grid-template-columns:repeat(2,minmax(0,1fr))}
-  .steps{grid-template-columns:repeat(4,minmax(0,1fr))}
-}
-@media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+.card h2{font:700 22px/1.27 var(--sans);letter-spacing:-.011em;color:var(--ink)}
+form{display:flex;flex-direction:column;gap:16px}
+.two{display:grid;grid-template-columns:minmax(0,1fr);gap:16px}
+.fld{display:flex;flex-direction:column;gap:6px;min-width:0}
+label,.lab{font:500 14px/1.43 var(--sans);color:var(--ink95)}
+.hint{font-size:12px;line-height:1.33;color:var(--body)}
+input[type=text],input[type=email],select{appearance:none;-webkit-appearance:none;width:100%;min-height:48px;border:1px solid rgba(0,0,0,.25);border-radius:8px;background:var(--card);padding:0 12px;font:400 16px/1.5 var(--sans);color:var(--ink);transition:border-color 200ms ease}
+select{background:var(--card) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' fill='none' stroke='%23000' stroke-width='1.5'/%3E%3C/svg%3E") no-repeat right 12px center;padding-right:32px}
+input:hover,select:hover{border-color:rgba(0,0,0,.5)}
+input:focus-visible,select:focus-visible,button:focus-visible,a:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
+.bad input,.bad select{border-color:var(--err)}
+.msg{font:500 12px/1.33 var(--sans);color:var(--err);min-height:0}
+.chk{display:grid;grid-template-columns:24px minmax(0,1fr);gap:10px;align-items:start;min-height:44px}
+.chk input{width:22px;height:22px;margin:1px 0 0;accent-color:var(--blue)}
+.chk label{font-weight:400;color:var(--ink95)}
+.btn{display:inline-flex;align-items:center;justify-content:center;min-height:48px;padding:6px 15px;border-radius:8px;border:0;font:500 16px/1.5 var(--sans);cursor:pointer;text-decoration:none;transition:background 200ms ease,opacity 200ms ease}
+.btn.primary{background:var(--blue);color:#fff;width:100%}
+.btn.primary:hover{background:#0067c4}
+.btn.primary[disabled]{opacity:.45;cursor:not-allowed}
+.btn.ghost{background:var(--sky-tint);color:#005bab;min-height:44px;font-size:14px}
+.btn.text{background:transparent;color:var(--ink95);min-height:44px;font-size:14px;padding-inline:8px}
+.btn.text:hover{background:rgba(0,0,0,.05)}
+.pill{display:inline-flex;align-items:center;align-self:flex-start;border-radius:9999px;padding:4px 12px;font:500 12px/1.33 var(--sans);letter-spacing:.01em;background:rgba(0,0,0,.06);color:var(--ink95)}
+.pill.ok{background:var(--sky-tint);color:#004f95}
+.pill.warn{background:var(--marigold);color:#000}
+.pill.bad{background:var(--coral);color:#000}
+.done{background:var(--midnight);color:#fff;border-radius:12px;padding:16px;display:flex;flex-direction:column;gap:8px}
+.done b{font:700 22px/1.27 var(--sans);color:#fff}
+.done p{font-size:14px;line-height:1.43;color:rgba(255,255,255,.88)}
+.done .btn{align-self:flex-start;margin-top:4px}
+.list{display:flex;flex-direction:column}
+.item{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:4px 8px;padding:12px 0;border-top:1px solid var(--line);align-items:center}
+.item b{font:600 14px/1.43 var(--sans);color:var(--ink);overflow-wrap:anywhere}
+.item small{display:block;font-size:12px;line-height:1.33;color:var(--body);overflow-wrap:anywhere}
+.empty{font-size:14px;line-height:1.43;color:var(--body);padding:8px 0}
+.head{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap}
+@media (min-width:560px){.wrap{gap:40px;padding-block:40px 80px}h1{font-size:40px;line-height:1.15}.card{padding:24px}.two{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
 </style>
 
 <div class="wrap">
-  <header class="hero">
-    <span class="eyebrow">Proceso de selección · 01/06/2024 al 10/07/2024</span>
-    <div class="hero-top"><h1>Reclutamiento Los Andes</h1><a class="btn primary" id="cta" href="https://claude.ai/artifact/ByBoAcDuDvJGLf1WRrZcPS" target="_blank" rel="noopener">Registrar un postulante</a></div>
-    <p class="lede">Quiénes postularon, hasta dónde llegaron y a quién se contrató. Elija una pestaña y toque los gráficos para ver los nombres.</p>
+  <header>
+    <span class="eyebrow">Los Andes · Dpto. de RR.HH.</span>
+    <h1><mark>Postula</mark> a un cargo en Los Andes</h1>
+    <p class="lede">Completa tus datos una sola vez. Todos los campos son obligatorios y el registro toma menos de dos minutos.</p>
+    <span class="pill" id="status" role="status">Conectando con el almacenamiento…</span>
   </header>
 
-  <nav class="tabs" aria-label="Secciones"><div role="tablist" id="tabs"></div></nav>
-
-  <section class="filters" aria-label="Filtros">
-    <div class="fgrid">
-      <select id="f-c" aria-label="Filtrar por cargo"></select>
-      <select id="f-g" aria-label="Filtrar por género"></select>
-      <select id="f-d" aria-label="Filtrar por departamento"></select>
-      <select id="f-k" aria-label="Filtrar por canal"></select>
-    </div>
-    <div class="fstate" id="fstate" aria-live="polite"></div>
+  <section class="card" aria-labelledby="t-form">
+    <h2 id="t-form">Datos de la postulación</h2>
+    <div id="done" class="done" hidden></div>
+    <form id="f" novalidate>
+      <div class="fld" data-f="nombre"><label for="nombre">Nombre completo</label><input id="nombre" name="nombre" type="text" autocomplete="name" maxlength="80"><span class="msg" id="e-nombre"></span></div>
+      <div class="fld" data-f="email"><label for="email">Correo electrónico</label><input id="email" name="email" type="email" autocomplete="email" inputmode="email" maxlength="120"><span class="msg" id="e-email"></span></div>
+      <div class="two">
+        <div class="fld" data-f="genero"><label for="genero">Género</label><select id="genero" name="genero"></select><span class="msg" id="e-genero"></span></div>
+        <div class="fld" data-f="rango_edad"><label for="rango_edad">Rango de edad</label><select id="rango_edad" name="rango_edad"></select><span class="msg" id="e-rango_edad"></span></div>
+      </div>
+      <div class="fld" data-f="residencia"><label for="residencia">Ciudad de residencia</label><select id="residencia" name="residencia"></select><span class="msg" id="e-residencia"></span></div>
+      <div class="two">
+        <div class="fld" data-f="experiencia"><label for="experiencia">Experiencia</label><select id="experiencia" name="experiencia"></select><span class="msg" id="e-experiencia"></span></div>
+        <div class="fld" data-f="nivel_profesional"><label for="nivel_profesional">Nivel profesional</label><select id="nivel_profesional" name="nivel_profesional"></select><span class="msg" id="e-nivel_profesional"></span></div>
+      </div>
+      <div class="fld" data-f="id_cargo"><label for="id_cargo">Cargo al que postulas</label><select id="id_cargo" name="id_cargo"></select><span class="msg" id="e-id_cargo"></span></div>
+      <div class="fld" data-f="canal"><label for="canal">¿Por qué canal te enteraste?</label><select id="canal" name="canal"></select><span class="msg" id="e-canal"></span></div>
+      <div class="fld" data-f="consentimiento">
+        <div class="chk"><input id="consentimiento" name="consentimiento" type="checkbox"><label for="consentimiento">Autorizo a Los Andes a usar estos datos únicamente para este proceso de selección.</label></div>
+        <span class="msg" id="e-consentimiento"></span>
+      </div>
+      <span class="msg" id="e-form" role="alert"></span>
+      <button class="btn primary" id="send" type="submit">Registrar postulación</button>
+    </form>
   </section>
 
-  <main id="panel" role="tabpanel"></main>
+  <section class="card" id="panel" aria-labelledby="t-list" hidden>
+    <div class="head"><h2 id="t-list">Registros guardados</h2><span class="pill ok" id="n">0 registros</span></div>
+    <p class="hint">Solo tú y los editores de esta página ven esta lista. Los 40 postulantes del proceso auditado no están aquí: los nuevos se numeran desde P41.</p>
+    <div class="list" id="list"><p class="empty">Aún no hay registros. El primero aparecerá aquí al enviar el formulario.</p></div>
+  </section>
 </div>
 
 <script>
-const ROWS=[{"n":"Estefania Arocas Pasadas","c":"Asistente de Marketing","g":"Femenino","e":"18-24","d":"La Paz","k":"LinkedIn","r":"Pedro Jimenez","s":"Rechazado","m":"No cumple requisitos (decisión del supervisor)","t":5,"h":false,"f":["2024-06-01","2024-06-04","2024-06-05","2024-06-06","2024-06-07",null,null,null],"x":null,"p":79,"hc":82,"mo":4,"a":false},{"n":"Queralt Viso Gilabert","c":"Asistente de Marketing","g":"Masculino","e":"25-34","d":"Oruro","k":"LinkedIn","r":"Carol Medina","s":"Rechazado","m":"No aprobó la evaluación","t":3,"h":false,"f":["2024-06-02","2024-06-07","2024-06-08",null,null,null,null,null],"x":null,"p":66,"hc":75,"mo":3,"a":false},{"n":"Joan Ayala Ferreras","c":"Asistente de Marketing","g":"Masculino","e":"35-44","d":"Tarija","k":"Facebook","r":"Pedro Jimenez","s":"Proceso cerrado (sin contratación)","m":null,"t":4,"h":false,"f":["2024-06-03","2024-06-04","2024-06-05","2024-06-06",null,null,null,null],"x":null,"p":94,"hc":91,"mo":5,"a":true},{"n":"Joan Baez Tejado","c":"Coordinador de Adquisiciones","g":"Indefinido","e":"45-54","d":"Cochabamba","k":"LinkedIn","r":"Diego Torrez","s":"Contratado","m":null,"t":8,"h":true,"f":["2024-06-04","2024-06-05","2024-06-07","2024-06-08","2024-06-11","2024-06-11","2024-06-11","2024-06-13"],"x":9,"p":52,"hc":68,"mo":2,"a":false},{"n":"Marc Bastardes Soto","c":"Coordinador de Adquisiciones","g":"Masculino","e":"55-64","d":"Santa Cruz","k":"Bolsa de trabajo","r":"Carol Medina","s":"Rechazado","m":"No cumple requisitos (decisión del supervisor)","t":5,"h":false,"f":["2024-06-05","2024-06-08","2024-06-09","2024-06-09","2024-06-11",null,null,null],"x":null,"p":82,"hc":87,"mo":4,"a":false},{"n":"Josep Anguera Vilafranca","c":"Coordinador de Adquisiciones","g":"Masculino","e":"45-54","d":"La Paz","k":"Facebook","r":"Diego Torrez","s":"Rechazado","m":"Fuera de tiempo","t":1,"h":false,"f":["2024-06-24",null,null,null,null,null,null,null],"x":null,"p":68,"hc":79,"mo":3,"a":false},{"n":"Esther Pascual Aloy","c":"Asistente de Ventas","g":"Femenino","e":"65+","d":"Oruro","k":"Bolsa de trabajo","r":"Pedro Jimenez","s":"Contratado","m":null,"t":8,"h":true,"f":["2024-06-07","2024-06-09","2024-06-09","2024-06-10","2024-06-14","2024-06-15","2024-06-16","2024-06-17"],"x":10,"p":96,"hc":93,"mo":5,"a":false},{"n":"Laura Vallés Girvent","c":"Asistente de Ventas","g":"Femenino","e":"18-24","d":"Tarija","k":"LinkedIn","r":"Pedro Jimenez","s":"Rechazado","m":"No cumple requisitos (filtro inicial)","t":1,"h":false,"f":["2024-06-08",null,null,null,null,null,null,null],"x":null,"p":50,"hc":65,"mo":2,"a":false},{"n":"Raquel Raya Garcia","c":"Asistente de Ventas","g":"Femenino","e":"65+","d":"Cochabamba","k":"Facebook","r":"Carol Medina","s":"Rechazado","m":"No cumple requisitos (decisión del supervisor)","t":5,"h":false,"f":["2024-06-09","2024-06-09","2024-06-10","2024-06-10","2024-06-14",null,null,null],"x":null,"p":81,"hc":84,"mo":4,"a":false},{"n":"Joan Andreu Cruz","c":"Diseñador Gráfico","g":"Masculino","e":"18-24","d":"Santa Cruz","k":"LinkedIn","r":"Pedro Jimenez","s":"Rechazado","m":"No aprobó la evaluación","t":3,"h":false,"f":["2024-06-25","2024-06-26","2024-06-27",null,null,null,null,null],"x":null,"p":67,"hc":77,"mo":3,"a":false},{"n":"Maria Isabel Baraldés Comas","c":"Diseñador Gráfico","g":"Femenino","e":"25-34","d":"Cochabamba","k":"Facebook","r":"Diego Torrez","s":"Proceso cerrado (sin contratación)","m":null,"t":6,"h":false,"f":["2024-06-26","2024-06-26","2024-06-27","2024-06-29","2024-06-30","2024-07-06",null,null],"x":null,"p":94,"hc":90,"mo":5,"a":true},{"n":"Adrià Berengueras Cullerés","c":"Diseñador Gráfico","g":"Indefinido","e":"45-54","d":"Santa Cruz","k":"Facebook","r":"Carol Medina","s":"Rechazado","m":"No cumple requisitos (decisión del supervisor)","t":5,"h":false,"f":["2024-06-27","2024-06-27","2024-06-28","2024-06-29","2024-06-30",null,null,null],"x":null,"p":51,"hc":66,"mo":2,"a":false},{"n":"Gerard López De Pablo Garcia Uceda","c":"Diseñador Gráfico","g":"Indefinido","e":"25-34","d":"Cochabamba","k":"Bolsa de trabajo","r":"Diego Torrez","s":"Rechazado","m":"No cumple requisitos (decisión del supervisor)","t":5,"h":false,"f":["2024-06-28","2024-06-28","2024-06-28","2024-06-29","2024-06-30",null,null,null],"x":null,"p":80,"hc":83,"mo":4,"a":false},{"n":"Eliot Arnau Moreno","c":"Gerente Comercial","g":"Masculino","e":"65+","d":"Santa Cruz","k":"LinkedIn","r":"Pedro Jimenez","s":"En proceso","m":null,"t":3,"h":false,"f":["2024-06-29","2024-07-02","2024-07-04",null,null,null,null,null],"x":null,"p":66,"hc":76,"mo":3,"a":true},{"n":"Jordi Raya Gavilan","c":"Analista de Sistemas","g":"Masculino","e":"18-24","d":"Cochabamba","k":"Bolsa de trabajo","r":"Carol Medina","s":"En proceso","m":null,"t":3,"h":false,"f":["2024-06-30","2024-07-03","2024-07-06",null,null,null,null,null],"x":null,"p":95,"hc":92,"mo":5,"a":true},{"n":"Lluís Zambudio Figuls","c":"Oficial de Créditos","g":"Masculino","e":"25-34","d":"Santa Cruz","k":"Facebook","r":"Pedro Jimenez","s":"En proceso","m":null,"t":3,"h":false,"f":["2024-06-30","2024-07-03","2024-07-04",null,null,null,null,null],"x":null,"p":51,"hc":67,"mo":2,"a":true},{"n":"Laura Bidault Cullerés","c":"Subgerente de Marketing","g":"Femenino","e":"35-44","d":"Cochabamba","k":"Facebook","r":"Diego Torrez","s":"En proceso","m":null,"t":3,"h":false,"f":["2024-07-07","2024-07-09","2024-07-10",null,null,null,null,null],"x":null,"p":79,"hc":81,"mo":4,"a":true},{"n":"Jordi Biosca Fontanet","c":"Subgerente de Marketing","g":"Masculino","e":"25-34","d":"Santa Cruz","k":"Facebook","r":"Carol Medina","s":"Rechazado","m":"No cumple requisitos (filtro inicial)","t":1,"h":false,"f":["2024-07-06",null,null,null,null,null,null,null],"x":null,"p":65,"hc":74,"mo":3,"a":false},{"n":"Dounya Zafra Figuls","c":"Subgerente de Marketing","g":"Femenino","e":"45-54","d":"Cochabamba","k":"LinkedIn","r":"Diego Torrez","s":"En proceso","m":null,"t":3,"h":false,"f":["2024-07-08","2024-07-10","2024-07-10",null,null,null,null,null],"x":null,"p":93,"hc":89,"mo":5,"a":true},{"n":"Julio Aleu Icart","c":"Subgerente de Marketing","g":"Masculino","e":"55-64","d":"La Paz","k":"Facebook","r":"Pedro Jimenez","s":"Rechazado","m":"No cumple requisitos (filtro inicial)","t":2,"h":false,"f":["2024-07-08","2024-07-09",null,null,null,null,null,null],"x":null,"p":52,"hc":69,"mo":2,"a":false},{"n":"Andreu Badia Torné","c":"Subgerente de Marketing","g":"Masculino","e":"55-64","d":"La Paz","k":"Facebook","r":"Carol Medina","s":"Contratado","m":null,"t":8,"h":true,"f":null,"x":null,"p":79,"hc":82,"mo":4,"a":false},{"n":"Ramon Morales Gese","c":"Subgerente de Marketing","g":"Masculino","e":"18-24","d":"La Paz","k":"LinkedIn","r":"Diego Torrez","s":"En proceso","m":null,"t":2,"h":false,"f":null,"x":null,"p":66,"hc":75,"mo":3,"a":false},{"n":"David-Jese Blanco Fontanet","c":"Asistente de Marketing","g":"Indefinido","e":"18-24","d":"La Paz","k":"LinkedIn","r":"Diego Torrez","s":"En proceso","m":null,"t":3,"h":false,"f":["2024-06-01","2024-06-04","2024-06-05",null,null,null,null,null],"x":null,"p":94,"hc":91,"mo":5,"a":false},{"n":"Aran Alvarez Fernández","c":"Asistente de Marketing","g":"Indefinido","e":"25-34","d":"La Paz","k":"Facebook","r":"Pedro Jimenez","s":"Contratado","m":null,"t":8,"h":true,"f":["2024-06-02","2024-06-07","2024-06-08","2024-06-10","2024-06-14","2024-06-15","2024-06-16","2024-06-17"],"x":15,"p":52,"hc":68,"mo":2,"a":false},{"n":"Gemma Garcia Almoguera","c":"Coordinador de Adquisiciones","g":"Masculino","e":"35-44","d":"La Paz","k":"Facebook","r":"Pedro Jimenez","s":"Rechazado","m":"No cumple requisitos (decisión del supervisor)","t":3,"h":false,"f":["2024-06-03","2024-06-04","2024-06-05",null,null,null,null,null],"x":null,"p":82,"hc":87,"mo":4,"a":false},{"n":"Ivan Libori Figueras","c":"Coordinador de Adquisiciones","g":"Masculino","e":"45-54","d":"La Paz","k":"Facebook","r":"Carol Medina","s":"Rechazado","m":"No aprobó la evaluación","t":5,"h":false,"f":["2024-06-04","2024-06-05","2024-06-07","2024-06-10","2024-06-14",null,null,null],"x":null,"p":68,"hc":79,"mo":3,"a":false},{"n":"David Bidault Pueyo","c":"Coordinador de Adquisiciones","g":"Masculino","e":"55-64","d":"La Paz","k":"LinkedIn","r":"Pedro Jimenez","s":"Rechazado","m":"No cumple requisitos (filtro inicial)","t":3,"h":false,"f":["2024-06-05","2024-06-08","2024-06-09",null,null,null,null,null],"x":null,"p":96,"hc":93,"mo":5,"a":false},{"n":"Xavier Benitez Jose","c":"Asistente de Ventas","g":"Femenino","e":"45-54","d":"Cochabamba","k":"Facebook","r":"Diego Torrez","s":"Rechazado","m":"No cumple requisitos (filtro inicial)","t":1,"h":false,"f":["2024-06-24",null,null,null,null,null,null,null],"x":null,"p":50,"hc":65,"mo":2,"a":false},{"n":"Mario Pascual Flores","c":"Asistente de Ventas","g":"Masculino","e":"65+","d":"Santa Cruz","k":"LinkedIn","r":"Diego Torrez","s":"Contratado","m":null,"t":8,"h":true,"f":["2024-06-28","2024-06-28","2024-06-28","2024-06-29","2024-06-30","2024-07-06","2024-07-06","2024-07-07"],"x":9,"p":81,"hc":84,"mo":4,"a":false},{"n":"Jesus Ayala Torné","c":"Asistente de Ventas","g":"Femenino","e":"18-24","d":"Cochabamba","k":"Facebook","r":"Diego Torrez","s":"Rechazado","m":"No cumple requisitos (filtro inicial)","t":1,"h":false,"f":["2024-06-24",null,null,null,null,null,null,null],"x":null,"p":67,"hc":77,"mo":3,"a":false},{"n":"Gemma Listan Figueras","c":"Diseñador Gráfico","g":"Indefinido","e":"65+","d":"La Paz","k":"Facebook","r":"Pedro Jimenez","s":"Rechazado","m":"No cumple requisitos (filtro inicial)","t":1,"h":false,"f":["2024-06-24",null,null,null,null,null,null,null],"x":null,"p":79,"hc":82,"mo":4,"a":false},{"n":"Silvia Rasero Gavilan","c":"Diseñador Gráfico","g":"Indefinido","e":"18-24","d":"La Paz","k":"Facebook","r":"Pedro Jimenez","s":"Contratado","m":null,"t":8,"h":true,"f":["2024-06-03","2024-06-04","2024-06-05","2024-06-06","2024-06-07","2024-06-10","2024-06-12","2024-06-13"],"x":10,"p":66,"hc":75,"mo":3,"a":false},{"n":"Albert Arnalot Puig","c":"Diseñador Gráfico","g":"Masculino","e":"25-34","d":"La Paz","k":"LinkedIn","r":"Carol Medina","s":"Rechazado","m":"No cumple requisitos (filtro inicial)","t":3,"h":false,"f":["2024-06-30","2024-07-03","2024-07-06",null,null,null,null,null],"x":null,"p":94,"hc":91,"mo":5,"a":false},{"n":"Maria Moliner Garrido","c":"Diseñador Gráfico","g":"Masculino","e":"45-54","d":"Cochabamba","k":"Bolsa de trabajo","r":"Pedro Jimenez","s":"Rechazado","m":"No cumple requisitos (filtro inicial)","t":3,"h":false,"f":["2024-06-30","2024-07-03","2024-07-04",null,null,null,null,null],"x":null,"p":52,"hc":68,"mo":2,"a":false},{"n":"Berta Galobart Garcia","c":"Gerente Comercial","g":"Masculino","e":"25-34","d":"Santa Cruz","k":"Facebook","r":"Diego Torrez","s":"Rechazado","m":"No cumple requisitos (filtro inicial)","t":3,"h":false,"f":null,"x":null,"p":82,"hc":87,"mo":4,"a":false},{"n":"Berta López Garrigassait","c":"Analista de Sistemas","g":"Femenino","e":"65+","d":"Cochabamba","k":"Facebook","r":"Carol Medina","s":"Contratado","m":null,"t":8,"h":true,"f":null,"x":null,"p":68,"hc":79,"mo":3,"a":false},{"n":"Mireia Sánchez Gómez","c":"Oficial de Créditos","g":"Masculino","e":"18-24","d":"La Paz","k":"Facebook","r":"Diego Torrez","s":"Rechazado","m":"No cumple requisitos (decisión del supervisor)","t":1,"h":false,"f":["2024-07-08",null,null,null,null,null,null,null],"x":null,"p":96,"hc":93,"mo":5,"a":false},{"n":"Gemma Alavedra Sunyé","c":"Subgerente de Marketing","g":"Femenino","e":"25-34","d":"La Paz","k":"LinkedIn","r":"Pedro Jimenez","s":"Rechazado","m":"No aprobó la evaluación","t":1,"h":false,"f":["2024-07-08",null,null,null,null,null,null,null],"x":null,"p":50,"hc":65,"mo":2,"a":false},{"n":"Maria Isabel Aligué Bonvehí","c":"Oficial de Créditos","g":"Masculino","e":"35-44","d":"La Paz","k":"Facebook","r":"Diego Torrez","s":"Proceso cerrado (sin contratación)","m":null,"t":1,"h":false,"f":["2024-07-08",null,null,null,null,null,null,null],"x":null,"p":81,"hc":84,"mo":4,"a":true},{"n":"Toni Mas Franch","c":"Subgerente de Marketing","g":"Masculino","e":"25-34","d":"La Paz","k":"Facebook","r":"Pedro Jimenez","s":"Rechazado","m":"No cumple requisitos (filtro inicial)","t":1,"h":false,"f":["2024-07-08",null,null,null,null,null,null,null],"x":null,"p":67,"hc":77,"mo":3,"a":false}];
-const MAP={"w":360,"h":400,"deps":[{"id":"BO.CB","name":"Cochabamba","d":"M149.6,184.0L149.4,184.7L149.1,184.7L148.3,184.7L148.9,185.3L149.1,185.6L149.1,186.1L148.7,185.9L148.3,185.8L147.9,185.8L147.6,186.1L148.0,186.5L148.4,186.9L148.7,187.5L148.9,188.1L148.9,188.5L148.8,188.6L148.7,188.8L148.7,189.0L148.7,190.0L148.8,190.6L149.4,191.3L149.5,191.8L149.4,192.2L149.2,192.7L149.0,193.2L149.3,193.9L149.0,194.4L149.1,195.0L149.2,195.5L149.1,196.0L148.5,196.8L148.4,197.2L149.1,197.2L148.6,198.0L148.5,198.3L148.6,198.6L148.8,198.9L148.9,199.2L148.8,199.6L148.0,201.6L147.9,201.7L147.9,201.8L147.8,202.6L147.5,202.9L146.9,203.3L146.6,203.6L146.4,204.0L146.2,204.5L146.1,204.9L146.2,205.3L146.4,205.6L146.7,205.7L146.9,205.8L147.0,206.1L146.9,206.3L145.9,208.0L145.8,208.6L145.4,209.1L145.4,209.5L145.6,209.8L146.0,210.3L146.1,210.6L146.2,210.8L146.2,211.4L146.8,213.7L147.3,214.4L149.9,217.3L150.5,217.6L151.2,217.8L151.4,217.9L151.7,218.1L153.5,220.0L153.9,220.4L155.5,221.3L156.2,221.6L156.5,221.7L157.4,222.4L159.8,225.2L161.1,226.2L161.3,226.4L161.4,226.6L161.6,227.4L161.9,227.8L162.0,228.4L161.8,228.9L161.6,229.5L161.2,229.5L160.7,229.6L160.4,229.5L160.1,229.5L159.5,229.6L159.2,229.6L158.7,229.6L158.5,229.6L158.1,229.7L157.1,230.4L156.9,230.6L156.8,231.0L156.7,231.3L156.8,232.0L156.7,232.2L156.6,232.5L152.2,239.1L151.6,239.8L149.3,242.1L148.7,242.6L148.3,243.1L148.1,243.9L148.2,244.5L148.4,244.8L149.7,246.1L150.0,246.7L150.9,248.4L151.5,249.9L151.9,250.3L152.1,250.5L152.5,250.8L152.7,251.0L152.9,251.3L153.3,252.0L153.9,252.8L154.3,253.6L154.6,254.7L155.0,255.5L155.4,255.8L155.5,255.9L155.6,256.1L155.6,256.4L155.6,256.6L155.5,256.8L155.5,257.0L155.5,257.1L155.9,257.4L155.9,257.6L155.9,258.0L155.9,258.2L156.0,258.5L156.2,258.9L156.3,259.1L156.5,259.2L156.6,259.2L157.1,259.4L157.4,259.5L157.8,259.9L158.3,260.3L158.5,260.5L159.2,260.8L159.3,261.0L159.4,261.0L159.5,261.1L159.5,261.2L159.5,261.3L159.6,261.5L159.5,262.7L159.5,263.0L159.5,263.2L159.7,263.7L159.7,263.8L159.6,264.1L158.9,264.9L158.4,265.8L158.1,265.5L158.0,265.3L157.7,264.6L157.6,264.4L157.0,264.1L156.4,264.4L154.5,265.9L154.1,266.0L153.7,266.1L152.3,266.1L151.9,266.1L151.6,265.9L151.2,265.3L150.9,265.1L150.4,264.6L150.2,264.4L149.8,263.5L149.7,263.4L149.4,263.2L149.2,263.0L148.8,262.3L148.3,262.0L147.0,262.0L146.4,261.8L146.2,261.6L145.9,261.1L145.7,260.8L145.2,260.7L144.6,260.8L142.6,261.4L141.0,262.1L140.0,262.8L139.4,263.4L139.1,263.7L138.9,264.1L138.7,265.0L138.5,265.4L138.2,265.7L137.8,265.7L137.4,265.6L136.2,264.7L135.7,264.5L135.2,264.4L134.1,264.6L133.6,264.6L133.3,264.1L133.2,263.6L133.2,262.7L133.1,262.0L132.8,261.8L132.5,261.7L132.2,261.4L131.9,261.0L131.7,260.8L131.6,259.8L131.3,259.7L131.0,259.8L130.7,259.8L130.6,259.4L130.6,259.2L130.5,258.9L130.4,258.6L130.3,258.6L130.0,258.5L129.1,257.9L128.8,257.6L128.7,257.5L128.5,257.5L128.1,257.4L127.9,257.3L127.1,256.4L125.9,254.3L124.9,253.5L124.4,253.3L123.9,252.9L123.5,252.5L123.2,251.6L122.9,251.1L122.2,250.3L121.2,249.7L120.7,249.3L120.5,248.8L118.8,247.3L117.1,246.4L116.6,245.6L116.0,245.6L114.2,246.0L113.9,246.0L113.8,245.2L113.5,245.0L113.3,244.8L113.0,244.7L112.6,244.4L112.2,243.8L111.9,243.1L111.8,242.5L111.2,242.5L110.9,242.4L110.6,242.3L109.6,242.3L108.5,242.3L107.7,242.5L107.4,242.6L105.1,244.2L104.5,244.7L102.9,246.0L102.6,246.2L102.3,246.2L102.0,246.2L100.6,246.0L99.0,246.0L97.9,245.9L97.7,245.9L97.4,245.9L96.7,245.9L94.9,246.3L93.3,242.5L91.2,239.3L89.8,237.4L89.3,236.9L84.7,233.4L88.3,231.5L88.6,231.2L88.8,231.0L88.8,230.6L88.6,230.3L88.3,230.1L88.2,229.8L88.1,229.5L88.6,228.3L88.2,226.8L88.0,226.5L87.8,226.1L87.6,225.8L87.6,225.4L87.7,224.6L87.3,222.4L87.1,222.0L86.9,221.6L86.6,221.1L86.2,220.6L85.9,220.2L84.6,219.6L84.2,219.3L84.0,218.7L84.1,218.1L84.3,217.5L84.5,217.3L84.9,216.6L85.0,216.3L85.1,216.0L85.0,215.5L85.0,214.9L85.2,214.4L85.8,213.4L86.3,212.6L87.0,212.2L88.7,212.0L89.3,211.8L90.1,211.4L90.7,210.9L91.1,210.3L91.2,209.8L91.2,209.3L90.9,208.0L90.9,207.6L90.9,205.4L90.7,204.6L89.9,203.1L89.6,202.4L89.5,201.6L89.9,200.1L90.0,196.6L89.9,196.1L89.2,195.4L89.0,195.0L88.9,194.9L88.0,194.6L88.0,194.4L88.1,193.9L88.0,193.3L87.7,192.8L86.9,191.9L86.5,191.2L86.0,190.5L85.9,190.3L85.8,190.0L86.1,187.9L86.1,187.2L86.0,186.5L86.0,186.2L86.1,185.8L86.3,185.4L86.5,185.2L86.7,184.9L86.7,184.4L86.7,184.2L86.6,184.1L86.4,184.1L86.3,183.9L86.3,183.9L87.1,182.9L88.1,181.7L90.4,179.7L98.2,187.5L98.5,188.1L99.0,189.3L99.3,190.2L99.4,190.5L101.1,192.6L105.6,197.5L106.2,198.0L108.9,199.8L110.3,200.5L112.5,201.2L115.4,201.9L116.8,201.9L117.7,201.9L127.4,199.0L130.1,197.7L130.5,197.2L130.9,196.4L132.4,191.7L132.4,190.8L132.5,190.4L133.3,188.6L134.7,186.2L135.5,185.7L146.1,184.4L148.8,183.8L149.2,184.0Z","cx":123,"cy":223.5},{"id":"BO.CQ","name":"Chuquisaca","d":"M130.5,258.9L130.6,259.2L130.6,259.4L130.7,259.8L131.0,259.8L131.3,259.7L131.6,259.8L131.7,260.8L131.9,261.0L132.2,261.4L132.5,261.7L132.8,261.8L133.1,262.0L133.2,262.7L133.2,263.6L133.3,264.1L133.6,264.6L134.1,264.6L135.2,264.4L135.7,264.5L136.2,264.7L137.4,265.6L137.8,265.7L138.2,265.7L138.5,265.4L138.7,265.0L138.9,264.1L139.1,263.7L139.4,263.4L140.0,262.8L141.0,262.1L142.6,261.4L144.6,260.8L145.2,260.7L145.7,260.8L145.9,261.1L146.2,261.6L146.4,261.8L147.0,262.0L148.3,262.0L148.8,262.3L149.2,263.0L149.4,263.2L149.7,263.4L149.8,263.5L150.2,264.4L150.4,264.6L150.9,265.1L151.2,265.3L151.6,265.9L151.9,266.1L152.3,266.1L153.7,266.1L154.1,266.0L154.5,265.9L156.4,264.4L157.0,264.1L157.6,264.4L157.7,264.6L158.0,265.3L158.1,265.5L158.4,265.8L158.7,266.1L159.0,266.4L159.1,266.8L159.1,267.2L159.0,267.6L159.0,268.1L159.1,268.4L159.5,269.2L159.6,269.6L159.8,270.4L160.0,270.7L160.6,271.2L161.2,271.5L161.7,271.9L162.1,272.6L162.2,272.9L162.3,273.4L162.4,273.8L162.6,274.1L162.9,274.3L163.3,274.3L164.1,274.4L164.5,274.5L164.8,274.8L165.0,275.2L165.3,275.5L165.5,275.5L165.7,275.6L165.9,275.6L166.1,275.9L167.2,279.9L167.3,280.3L167.4,280.6L167.7,280.8L168.1,281.0L168.6,281.0L169.1,281.0L169.5,280.8L169.9,280.6L170.2,280.4L170.4,280.1L170.5,279.6L170.8,277.5L171.1,276.9L171.4,276.6L171.8,276.6L172.5,276.9L173.1,276.9L174.8,276.7L175.1,277.1L174.4,282.0L174.3,283.8L175.5,304.3L175.6,304.6L176.0,305.3L176.0,305.5L177.2,317.4L177.6,318.7L178.2,318.8L179.9,318.8L181.2,319.1L181.5,319.1L181.7,319.0L181.9,318.9L182.0,318.8L182.5,318.0L182.7,317.8L182.9,317.7L183.2,317.6L183.8,317.5L184.0,317.4L184.1,317.3L184.5,317.0L184.7,316.8L185.0,316.3L185.2,316.1L185.4,316.0L185.8,316.2L186.2,316.8L187.0,318.9L187.3,319.3L187.5,319.4L187.7,319.5L217.6,319.3L217.1,320.2L216.0,321.8L215.8,322.6L215.8,325.3L215.9,327.9L215.9,330.7L215.9,335.1L171.5,335.0L168.9,334.9L168.4,334.9L168.4,334.9L167.8,334.4L167.6,334.0L167.7,333.7L167.9,333.4L167.7,333.3L167.3,333.4L167.2,333.4L166.4,333.4L166.2,333.3L166.1,332.7L165.8,332.5L165.3,332.4L164.7,332.4L164.3,332.5L163.9,332.5L163.5,332.3L163.2,331.9L163.0,331.8L162.8,332.3L162.8,332.5L162.7,332.8L162.7,333.5L162.9,335.3L162.9,335.5L162.8,335.6L162.7,335.8L162.5,336.1L162.5,336.2L162.4,336.4L162.4,336.6L162.3,336.8L162.3,337.0L162.4,337.4L162.4,337.6L162.4,338.2L162.4,338.3L162.3,338.5L162.2,338.6L162.1,338.8L162.0,338.9L161.9,339.1L161.7,339.2L161.6,339.2L161.4,339.3L161.2,339.3L160.5,339.0L160.1,339.0L158.4,339.2L157.9,339.1L156.9,338.6L155.9,337.8L155.6,337.6L155.5,337.5L155.1,337.5L155.0,337.5L154.4,337.5L153.6,337.7L153.3,337.8L153.1,337.7L153.0,337.7L152.9,337.5L152.8,337.5L152.7,337.3L152.0,335.8L152.0,335.7L151.4,335.1L151.3,334.9L151.1,334.7L151.0,334.6L150.5,334.3L150.4,334.2L150.3,334.0L150.1,333.6L150.1,333.5L150.0,333.4L149.8,333.3L149.7,333.3L149.3,333.3L149.2,333.3L149.0,333.2L148.6,333.0L148.5,333.0L148.3,332.9L148.1,333.0L147.9,333.1L147.7,333.5L147.4,334.0L147.0,334.6L146.8,335.1L146.8,335.4L146.8,335.8L146.8,336.0L146.8,336.1L146.5,336.6L146.5,336.7L146.4,337.1L146.3,337.3L146.1,337.4L145.7,337.7L145.1,337.8L144.8,337.9L144.7,337.9L144.6,337.9L144.5,337.7L144.4,337.6L144.2,337.5L143.8,337.3L143.7,337.3L143.6,337.2L143.5,337.0L143.4,336.9L143.4,336.8L143.3,336.7L143.1,336.6L143.0,336.6L142.7,336.4L142.6,336.4L142.5,336.2L142.5,336.0L142.4,335.9L142.4,335.8L142.2,335.7L142.1,335.7L141.9,335.6L141.6,335.7L141.4,335.7L141.3,335.6L141.1,335.5L140.9,335.3L140.8,335.2L140.7,335.2L140.5,335.3L140.3,335.3L140.1,335.4L140.0,335.3L139.9,335.3L139.7,335.1L139.7,335.0L139.5,335.0L139.3,335.1L139.2,335.1L139.1,335.1L139.1,335.1L138.2,334.0L138.0,333.8L137.9,333.7L137.7,333.7L137.5,333.8L137.2,333.9L137.0,333.9L136.9,333.9L136.4,333.8L136.2,333.7L136.0,333.5L135.9,333.4L135.7,333.4L135.5,333.5L135.4,333.7L135.3,333.9L135.2,334.1L134.9,339.6L134.4,341.2L134.4,341.5L134.4,342.7L134.4,343.3L133.6,349.3L133.5,351.0L131.2,349.3L127.3,345.0L126.9,343.9L126.8,343.8L126.8,343.0L127.1,339.9L127.1,339.7L127.0,339.4L126.9,339.1L126.9,338.7L127.0,338.1L128.1,333.9L128.3,330.2L129.0,329.0L129.3,328.4L129.6,326.7L129.7,326.3L131.8,321.2L129.9,313.3L129.8,312.7L129.8,311.7L129.8,311.4L130.1,310.4L130.2,310.1L130.4,309.9L130.6,309.6L131.3,308.6L131.4,308.1L131.3,307.6L131.3,307.4L131.3,306.8L131.4,306.6L131.5,306.5L131.8,306.4L131.9,306.4L132.0,306.2L132.5,305.8L133.1,305.3L133.2,305.3L133.7,305.1L134.6,305.0L135.2,304.8L138.0,304.6L138.5,304.4L143.8,301.5L145.9,299.2L146.8,297.8L147.1,297.5L146.9,296.8L146.3,295.7L143.9,292.5L143.7,292.0L143.5,291.4L143.5,290.9L143.6,290.2L143.7,289.7L143.8,289.5L143.7,289.2L143.6,289.1L143.4,288.8L143.2,288.6L143.2,288.6L143.0,288.0L142.7,287.3L142.3,286.8L141.8,286.4L141.1,286.2L140.2,286.3L138.1,287.0L137.5,287.0L137.4,286.9L137.3,286.8L137.2,286.7L137.0,286.8L136.4,287.0L135.7,286.8L134.0,285.8L133.6,285.5L133.2,285.2L131.9,285.0L131.5,284.7L131.1,284.3L129.7,283.3L129.4,283.0L128.8,282.0L128.0,281.5L127.6,281.1L127.5,280.8L127.4,280.0L127.2,279.6L127.1,279.4L126.9,279.2L126.0,278.6L125.6,277.8L125.0,276.4L125.0,276.3L125.0,276.3L125.1,276.1L125.1,276.0L125.2,275.9L125.6,275.0L126.3,273.9L126.5,273.7L126.9,273.4L127.0,273.2L127.0,273.1L127.0,272.9L126.9,272.6L126.9,272.2L126.8,272.1L126.8,271.9L126.7,271.7L126.6,271.6L126.4,271.4L126.1,271.2L126.1,271.1L126.0,270.9L126.0,270.6L126.0,270.3L126.0,270.2L126.1,270.1L127.1,269.2L127.5,268.9L127.7,268.8L127.9,268.6L128.2,268.1L128.3,267.7L128.3,267.4L128.3,267.1L128.2,266.9L128.1,266.8L128.0,266.7L127.8,266.6L127.6,266.6L127.5,266.5L127.3,266.5L126.1,266.8L125.6,267.0L122.5,268.6L122.4,268.6L122.3,268.6L122.1,268.6L121.9,268.5L121.9,268.3L121.8,268.1L121.9,267.9L121.9,267.8L122.0,267.6L122.2,267.5L122.8,266.9L123.0,266.7L123.2,266.4L123.2,266.3L122.6,263.1L122.5,261.9L122.7,260.5L122.7,260.2L122.6,259.9L122.3,259.8L121.7,259.4L121.5,259.3L121.3,259.2L121.0,258.9L120.9,258.7L120.9,258.5L120.9,258.2L120.7,257.2L120.8,256.9L120.9,256.8L121.0,256.7L121.2,256.7L121.4,256.6L121.5,256.7L121.6,256.8L121.6,257.0L121.7,257.1L121.8,257.2L122.1,257.2L122.3,257.3L122.4,257.4L122.6,257.5L122.8,257.5L123.6,257.5L123.8,257.5L123.9,257.6L124.1,257.7L124.1,257.8L124.2,257.9L124.3,258.0L124.4,258.2L124.5,258.3L124.6,258.4L124.8,258.4L125.0,258.4L125.8,258.0L125.9,257.9L126.1,257.9L126.1,257.9L126.2,257.9L126.4,258.0L128.5,258.7L129.2,259.1L129.6,259.1Z","cx":159.1,"cy":306.6},{"id":"BO.EB","name":"El Beni","d":"M234.8,116.6L219.9,125.3L195.3,139.5L179.8,148.5L170.2,151.3L168.9,151.9L169.5,154.7L169.5,158.0L169.7,159.5L169.7,160.3L169.6,160.8L169.4,161.2L169.3,162.0L169.6,163.3L169.8,163.8L170.7,165.2L171.7,168.1L174.6,172.6L174.9,172.9L175.1,173.1L175.8,173.4L176.2,173.6L176.5,174.1L176.7,174.4L176.8,175.8L177.0,176.2L178.3,177.6L178.7,177.8L179.0,177.9L179.3,177.9L179.6,178.0L180.4,178.7L180.7,178.9L181.6,179.3L181.8,179.4L182.1,179.7L182.3,180.1L182.7,180.8L183.3,181.5L183.4,181.8L183.5,182.1L183.5,182.8L183.6,183.3L183.7,183.8L184.0,184.2L184.7,185.0L185.0,185.2L185.3,185.4L186.3,185.6L186.6,185.7L186.9,185.9L186.8,185.9L186.2,186.0L149.6,184.0L149.2,184.0L148.8,183.8L146.1,184.4L135.5,185.7L134.7,186.2L133.3,188.6L132.5,190.4L132.4,190.8L132.4,191.7L130.9,196.4L130.5,197.2L130.1,197.7L127.4,199.0L117.7,201.9L116.8,201.9L115.4,201.9L112.5,201.2L110.3,200.5L108.9,199.8L106.2,198.0L105.6,197.5L101.1,192.6L99.4,190.5L99.3,190.2L99.0,189.3L98.5,188.1L98.2,187.5L90.4,179.7L89.3,178.5L83.7,173.2L83.1,172.2L82.9,171.9L82.7,171.8L82.1,171.5L81.7,171.3L81.4,171.0L81.2,170.7L81.1,170.4L81.1,170.1L81.1,169.8L81.3,168.6L81.3,168.2L81.2,167.8L79.5,164.3L78.7,163.1L78.0,162.4L77.7,162.0L77.4,161.6L76.9,160.5L76.6,160.2L76.3,159.9L76.0,159.9L75.6,159.9L75.0,160.0L74.6,159.9L74.3,159.8L74.0,159.7L73.6,159.3L73.2,159.1L72.8,158.6L72.5,157.5L72.4,156.9L72.3,156.5L72.4,155.9L72.6,155.3L72.7,154.2L72.7,153.0L72.6,152.4L72.3,152.0L71.0,150.7L70.4,149.9L69.7,148.2L69.5,147.9L69.6,147.7L69.8,147.4L70.0,147.2L70.4,146.8L70.6,146.6L70.9,146.0L70.9,145.4L70.7,144.9L70.4,144.4L69.8,143.8L69.6,143.5L69.6,143.3L69.6,142.9L69.6,142.8L69.5,142.7L69.3,142.5L69.3,142.4L68.9,141.3L68.7,140.8L68.6,140.2L68.8,139.7L69.1,139.4L70.0,139.1L70.3,138.6L70.4,138.2L70.4,137.7L70.1,136.7L70.2,135.0L69.9,132.8L69.9,132.5L69.5,131.2L69.5,130.7L70.3,127.3L70.5,126.9L70.8,126.5L71.0,126.1L71.1,125.5L70.7,124.8L70.8,124.2L71.1,123.1L71.3,122.5L71.7,122.1L72.1,121.8L72.4,121.4L73.0,120.5L74.1,119.0L74.4,118.6L74.4,118.0L73.9,117.3L73.5,114.6L73.4,113.6L73.9,112.7L75.1,110.8L75.5,110.4L76.5,109.6L78.7,107.0L78.8,106.7L78.9,106.1L79.1,105.9L79.3,105.7L79.8,105.4L80.0,105.2L81.1,103.2L81.6,102.8L82.1,102.7L82.6,102.7L83.0,102.6L84.3,99.3L85.9,92.8L85.9,92.0L85.8,91.5L85.4,90.2L86.1,89.2L86.5,88.6L86.5,88.2L86.3,87.7L86.2,87.3L86.2,85.6L86.2,85.1L86.4,84.5L86.9,83.9L87.1,83.4L87.0,82.9L86.8,82.4L86.7,81.9L86.9,81.2L87.2,80.6L87.5,80.0L87.5,79.3L87.2,78.6L87.3,78.0L87.7,76.7L87.9,75.5L87.7,74.1L87.3,72.7L86.7,71.6L86.3,71.1L86.1,71.0L86.0,71.0L85.9,71.1L85.7,71.2L85.5,71.1L85.3,70.6L85.1,69.9L85.2,69.4L85.7,69.3L86.2,69.3L86.7,69.2L87.2,68.9L87.6,68.5L87.9,67.9L87.7,67.5L87.4,67.1L87.1,66.7L87.1,66.1L87.5,65.9L88.0,65.9L88.5,66.0L89.0,65.9L89.4,65.6L89.7,65.1L90.1,64.7L90.6,64.6L91.5,64.6L92.0,64.4L92.4,63.9L92.4,63.2L92.2,61.8L92.4,61.3L93.1,60.5L93.1,60.0L93.1,59.3L93.1,58.6L93.4,58.0L94.0,57.8L96.5,57.6L98.4,57.8L99.2,57.6L100.7,56.6L102.6,56.4L103.4,56.2L103.6,55.6L103.7,55.0L105.2,54.7L105.5,54.1L105.3,53.8L105.0,53.5L104.8,53.1L104.9,52.5L105.2,52.0L106.2,50.8L106.4,50.2L106.4,49.7L106.1,48.7L106.2,48.1L106.6,47.9L107.0,48.1L107.5,48.1L108.2,47.6L108.3,46.6L108.3,45.6L108.6,44.8L108.9,44.4L109.3,44.7L109.7,44.4L110.1,43.9L110.4,42.7L110.8,42.1L111.0,41.5L110.8,41.1L110.5,41.0L109.9,41.2L109.6,41.3L109.4,41.1L109.3,40.9L109.2,40.8L110.2,40.5L111.3,39.6L111.9,39.3L113.0,39.5L114.2,39.9L115.2,39.9L115.6,39.1L115.4,38.6L115.1,38.1L114.6,37.7L114.1,37.6L113.9,37.4L114.0,36.8L114.4,36.3L114.8,36.0L115.1,36.2L115.5,36.6L115.8,37.0L115.9,37.3L116.3,37.4L117.0,37.3L118.2,36.8L118.8,36.3L119.1,35.9L119.1,35.3L119.1,34.6L119.0,33.9L118.8,33.4L118.9,32.9L119.6,32.7L120.1,32.8L120.7,33.0L121.3,33.2L121.9,32.8L122.5,32.3L123.0,31.9L125.4,30.7L125.6,30.5L125.8,29.9L126.2,29.3L126.8,28.8L127.2,28.5L127.6,28.3L129.1,28.1L129.1,28.1L129.1,28.3L129.2,28.4L129.3,28.5L128.7,29.7L128.2,30.1L127.6,30.2L127.6,30.4L127.9,30.9L127.9,31.1L127.9,31.3L127.8,31.5L127.8,31.7L127.8,31.9L127.8,32.2L127.9,32.5L128.0,32.6L128.1,32.9L127.9,34.2L127.9,34.7L128.4,35.2L128.9,35.5L129.3,35.9L129.5,36.7L129.4,37.2L129.2,38.3L128.8,39.6L129.0,40.0L130.0,40.3L130.6,40.6L131.0,41.1L131.2,41.5L131.4,43.9L131.4,44.1L131.6,44.2L131.7,44.4L131.7,44.8L131.6,45.0L131.5,45.2L131.2,45.3L131.0,45.5L130.6,46.2L130.6,46.7L130.7,47.2L130.8,47.8L130.6,48.3L129.5,49.1L129.1,49.6L129.0,50.3L129.4,50.8L129.8,51.1L130.0,51.5L129.9,51.9L129.5,52.1L129.3,52.4L129.3,53.2L129.6,53.7L130.2,54.1L130.8,54.4L131.0,54.6L130.9,54.9L130.4,55.5L130.2,55.8L130.2,56.1L130.2,56.3L131.2,58.8L131.9,59.6L132.9,59.3L133.6,59.7L133.9,59.9L134.0,60.3L134.0,60.6L133.8,61.1L133.8,61.5L134.0,61.9L134.1,61.9L134.3,61.9L134.6,62.1L135.2,62.5L135.4,62.7L134.8,62.9L134.7,63.2L134.8,63.9L134.8,64.2L134.5,64.6L134.5,64.9L134.5,65.9L134.6,66.3L135.0,66.7L135.5,67.1L135.8,67.2L136.1,67.0L136.2,65.6L136.4,65.2L136.5,65.0L136.9,64.9L137.0,65.1L136.9,65.8L137.3,66.2L137.8,66.4L138.3,66.6L138.5,67.6L138.9,68.2L139.0,68.5L139.0,68.8L139.0,69.4L139.0,69.6L139.1,70.2L139.3,70.5L139.6,70.6L139.6,70.6L140.0,70.8L140.1,71.1L140.2,71.4L140.1,71.7L139.6,72.3L139.6,72.8L139.8,73.2L140.1,73.5L140.5,73.8L141.0,73.9L142.2,74.0L142.7,74.1L143.3,74.3L143.9,74.4L144.5,74.1L144.9,74.3L145.4,74.4L145.8,74.6L146.0,75.0L146.2,75.6L146.5,76.1L147.4,77.1L147.2,77.5L147.3,77.8L147.6,77.9L148.0,77.8L148.0,77.6L148.1,76.8L148.2,76.7L148.7,76.6L148.8,76.8L148.9,77.3L148.9,77.5L148.7,77.9L148.7,78.1L148.8,78.2L149.0,78.4L149.1,78.5L149.4,78.8L150.1,79.2L151.4,79.8L151.7,79.9L152.4,79.9L152.6,79.9L153.1,80.3L153.7,80.6L153.7,80.5L153.7,80.4L153.7,80.4L154.1,80.4L154.3,80.5L154.7,80.9L154.8,81.1L154.9,81.4L154.8,82.0L154.7,82.7L154.2,83.8L154.2,84.3L154.4,84.4L155.1,84.6L155.3,84.8L155.5,85.1L155.9,85.7L156.1,86.0L156.4,86.3L156.9,86.7L157.4,86.9L158.0,87.0L159.2,86.8L159.6,86.9L159.9,87.8L160.1,87.9L160.4,87.8L160.6,87.8L160.7,87.6L161.1,87.3L161.3,87.2L161.9,87.2L162.4,87.3L162.8,87.5L163.6,88.4L163.8,88.5L164.1,88.2L164.6,87.6L165.0,88.1L166.6,88.1L167.2,89.0L167.7,88.9L168.6,88.6L169.0,88.7L169.3,88.9L169.6,89.2L170.1,89.2L170.4,88.9L170.6,88.6L170.7,88.3L171.7,87.2L171.7,87.0L172.2,86.9L173.0,86.7L173.4,86.6L177.4,87.2L177.5,87.3L179.0,88.1L180.2,89.0L180.6,89.3L181.2,89.3L181.6,89.3L181.9,89.4L182.2,89.5L182.4,89.7L182.6,90.1L182.7,90.3L182.7,90.6L182.8,90.9L183.1,91.1L183.3,91.2L183.5,91.3L183.6,91.6L183.7,91.8L184.8,92.6L185.4,92.7L185.7,92.9L186.5,93.5L186.9,93.6L188.8,93.6L189.1,93.6L189.2,93.3L189.5,93.1L190.1,92.7L190.2,92.7L190.5,92.7L190.7,92.7L190.8,92.5L190.9,92.2L191.1,92.1L191.8,91.8L191.9,91.7L192.2,91.8L192.8,92.0L193.6,92.2L193.9,92.6L194.1,93.6L194.2,93.8L194.4,94.0L194.5,94.1L194.3,94.5L194.3,94.6L194.3,94.8L194.4,94.9L195.0,95.4L195.3,95.8L195.4,96.1L195.5,96.7L195.7,97.3L196.0,97.7L196.4,97.9L196.7,98.0L196.9,98.1L197.2,98.0L197.4,97.9L197.7,97.7L197.8,97.9L197.9,98.2L199.4,100.1L199.4,100.3L199.6,100.5L199.9,100.5L200.2,100.5L200.4,100.6L200.5,100.7L200.6,101.0L200.7,101.4L201.0,101.8L201.6,102.2L202.1,102.5L202.1,101.9L202.4,101.7L202.9,101.7L203.4,101.7L203.8,101.4L204.1,101.2L204.4,101.1L204.9,101.5L205.2,101.7L205.4,101.9L205.5,102.2L205.6,102.9L205.7,103.0L208.1,104.0L209.8,104.0L210.4,104.1L210.7,104.4L211.5,105.3L211.6,105.4L211.6,105.7L211.7,105.7L212.1,105.7L212.2,105.7L212.7,106.0L212.9,106.2L214.2,106.3L214.6,106.2L214.9,106.0L215.4,106.2L215.9,106.1L216.3,105.9L217.3,105.6L217.6,105.6L217.9,105.7L218.7,106.2L218.7,105.5L219.0,105.6L219.6,106.4L219.9,106.5L220.2,106.4L220.3,106.4L220.4,106.8L220.4,108.8L220.5,109.3L220.8,109.6L221.3,110.1L222.6,111.4L223.0,111.6L223.0,111.8L223.4,112.4L223.6,112.5L224.2,112.8L224.7,113.2L226.0,114.5L226.3,114.7L226.8,115.0L227.1,115.2L227.2,115.4L227.8,117.3L228.1,117.6L228.7,117.7L229.2,117.6L229.8,117.4L230.3,117.3L230.9,117.5L231.4,117.2L232.1,117.0L232.7,116.8L234.7,116.6Z","cx":133.7,"cy":125},{"id":"BO.LP","name":"La Paz","d":"M86.4,84.5L86.2,85.1L86.2,85.6L86.2,87.3L86.3,87.7L86.5,88.2L86.5,88.6L86.1,89.2L85.4,90.2L85.8,91.5L85.9,92.0L85.9,92.8L84.3,99.3L83.0,102.6L82.6,102.7L82.1,102.7L81.6,102.8L81.1,103.2L80.0,105.2L79.8,105.4L79.3,105.7L79.1,105.9L78.9,106.1L78.8,106.7L78.7,107.0L76.5,109.6L75.5,110.4L75.1,110.8L73.9,112.7L73.4,113.6L73.5,114.6L73.9,117.3L74.4,118.0L74.4,118.6L74.1,119.0L73.0,120.5L72.4,121.4L72.1,121.8L71.7,122.1L71.3,122.5L71.1,123.1L70.8,124.2L70.7,124.8L71.1,125.5L71.0,126.1L70.8,126.5L70.5,126.9L70.3,127.3L69.5,130.7L69.5,131.2L69.9,132.5L69.9,132.8L70.2,135.0L70.1,136.7L70.4,137.7L70.4,138.2L70.3,138.6L70.0,139.1L69.1,139.4L68.8,139.7L68.6,140.2L68.7,140.8L68.9,141.3L69.3,142.4L69.3,142.5L69.5,142.7L69.6,142.8L69.6,142.9L69.6,143.3L69.6,143.5L69.8,143.8L70.4,144.4L70.7,144.9L70.9,145.4L70.9,146.0L70.6,146.6L70.4,146.8L70.0,147.2L69.8,147.4L69.6,147.7L69.5,147.9L69.7,148.2L70.4,149.9L71.0,150.7L72.3,152.0L72.6,152.4L72.7,153.0L72.7,154.2L72.6,155.3L72.4,155.9L72.3,156.5L72.4,156.9L72.5,157.5L72.8,158.6L73.2,159.1L73.6,159.3L74.0,159.7L74.3,159.8L74.6,159.9L75.0,160.0L75.6,159.9L76.0,159.9L76.3,159.9L76.6,160.2L76.9,160.5L77.4,161.6L77.7,162.0L78.0,162.4L78.7,163.1L79.5,164.3L81.2,167.8L81.3,168.2L81.3,168.6L81.1,169.8L81.1,170.1L81.1,170.4L81.2,170.7L81.4,171.0L81.7,171.3L82.1,171.5L82.7,171.8L82.9,171.9L83.1,172.2L83.7,173.2L89.3,178.5L90.4,179.7L88.1,181.7L87.1,182.9L86.3,183.9L86.3,183.9L86.4,184.1L86.6,184.1L86.7,184.2L86.7,184.4L86.7,184.9L86.5,185.2L86.3,185.4L86.1,185.8L86.0,186.2L86.0,186.5L86.1,187.2L86.1,187.9L85.8,190.0L85.9,190.3L86.0,190.5L86.5,191.2L86.9,191.9L87.7,192.8L88.0,193.3L88.1,193.9L88.0,194.4L88.0,194.6L88.9,194.9L89.0,195.0L89.2,195.4L89.9,196.1L90.0,196.6L89.9,200.1L89.5,201.6L89.6,202.4L89.9,203.1L90.7,204.6L90.9,205.4L90.9,207.6L90.9,208.0L91.2,209.3L91.2,209.8L91.1,210.3L90.7,210.9L90.1,211.4L89.3,211.8L88.7,212.0L87.0,212.2L86.3,212.6L85.8,213.4L85.2,214.4L85.0,214.9L85.0,215.5L85.1,216.0L85.0,216.3L84.9,216.6L84.5,217.3L84.3,217.5L84.1,218.1L84.0,218.7L84.2,219.3L84.6,219.6L85.9,220.2L86.2,220.6L86.6,221.1L86.9,221.6L87.1,222.0L87.3,222.4L87.7,224.6L87.6,225.4L87.6,225.8L87.8,226.1L88.0,226.5L88.2,226.8L88.6,228.3L88.1,229.5L88.2,229.8L88.3,230.1L88.6,230.3L88.8,230.6L88.8,231.0L88.6,231.2L88.3,231.5L84.7,233.4L84.1,232.8L84.0,232.7L83.3,231.9L82.8,231.2L82.5,230.4L82.3,230.1L82.1,229.8L81.9,229.6L81.5,229.3L81.3,229.2L81.1,229.1L80.8,229.0L80.5,229.0L80.3,229.0L76.6,230.1L76.0,230.3L72.8,232.3L69.4,234.7L68.7,235.2L64.1,238.1L63.6,238.5L63.5,238.7L63.4,238.9L63.5,239.3L63.5,239.6L63.6,239.8L63.9,240.2L64.0,240.6L64.1,240.7L64.1,240.9L64.1,241.1L64.0,241.4L63.9,241.6L63.8,241.9L63.6,242.1L62.9,242.5L62.6,242.6L62.2,242.5L62.1,242.5L61.9,242.5L56.5,238.3L55.9,238.0L54.9,237.7L52.7,236.5L51.9,236.3L47.5,236.1L44.2,236.4L43.3,236.6L41.5,237.4L41.3,237.6L39.7,238.9L37.3,242.1L36.3,243.0L33.9,244.8L32.5,245.5L28.8,246.6L26.8,247.6L26.5,247.7L26.3,247.2L25.9,247.2L25.5,247.4L24.9,247.4L24.4,247.3L24.0,247.1L23.1,246.6L22.5,246.4L22.3,246.3L22.1,246.1L21.5,245.5L21.1,245.6L20.8,245.9L20.4,245.8L20.0,245.1L19.7,244.0L19.7,241.9L19.5,240.8L18.8,239.5L17.8,238.4L15.6,236.4L15.0,235.5L14.7,234.4L14.6,232.1L14.6,232.1L14.7,230.0L14.6,229.0L14.3,228.1L13.9,227.6L13.3,227.0L12.2,226.1L11.8,225.9L10.3,225.8L10.3,225.8L10.7,225.0L11.2,223.4L11.5,222.8L11.6,222.7L12.1,222.6L12.3,222.6L13.8,221.2L14.6,220.6L15.4,220.3L16.2,220.2L16.9,219.9L17.5,219.2L17.6,218.7L17.5,218.6L17.3,218.4L17.2,218.3L17.3,218.0L17.5,217.8L18.7,217.1L19.0,216.7L19.7,215.1L22.6,212.1L23.0,211.5L23.5,209.9L23.7,209.5L24.2,209.2L25.2,209.1L25.7,209.0L27.3,208.1L27.8,207.8L28.2,207.2L28.6,206.7L27.8,205.7L27.7,205.2L27.8,204.3L27.7,202.6L27.8,202.0L28.0,201.5L28.8,200.6L29.7,200.1L32.8,198.9L33.5,197.9L33.1,197.1L32.5,196.6L31.1,196.1L29.9,194.8L29.3,194.4L28.5,194.7L27.6,194.4L27.3,194.4L27.0,194.5L26.5,194.9L26.2,195.0L25.4,195.0L24.8,194.8L24.2,194.4L23.7,194.0L22.7,192.8L22.1,191.2L20.9,188.2L19.7,185.2L18.5,182.3L17.3,179.3L17.0,178.4L16.9,177.5L17.1,176.7L18.9,173.9L19.0,173.4L19.1,172.8L19.3,172.2L19.6,171.7L19.9,171.6L20.7,171.3L20.9,171.2L20.9,170.9L20.6,170.0L20.7,169.6L21.2,169.0L21.7,168.5L22.6,168.2L23.0,167.1L23.5,167.0L24.2,167.1L24.6,166.7L24.7,166.2L24.0,165.6L23.3,164.6L22.9,164.1L21.2,162.9L20.8,162.4L19.2,160.0L18.7,159.5L18.1,159.0L17.9,158.5L18.1,157.9L18.5,156.8L18.6,156.6L18.5,154.3L18.5,153.8L18.8,153.4L19.4,153.0L20.9,152.6L21.4,152.3L21.7,151.5L21.9,147.8L22.3,147.3L22.8,147.2L23.5,147.3L24.1,147.3L24.2,147.0L24.2,145.7L24.3,145.2L24.4,145.0L24.9,144.9L25.1,144.8L26.2,143.6L26.7,143.1L28.5,142.2L29.1,141.6L29.0,141.1L28.6,140.5L28.4,140.0L28.3,138.9L28.4,138.3L28.5,137.8L29.2,137.3L30.2,137.1L32.1,136.8L32.6,136.2L32.5,135.2L31.8,133.3L31.6,132.3L31.4,131.9L31.1,131.5L29.7,130.5L29.3,130.0L29.1,129.0L29.1,128.0L29.0,127.0L28.5,126.3L28.2,125.2L28.1,124.8L28.2,124.3L28.4,124.0L28.4,123.7L28.1,123.2L26.6,122.0L26.0,121.2L26.4,120.6L26.7,120.5L27.6,120.7L27.9,120.6L28.2,120.3L28.2,120.0L28.1,119.6L28.2,119.2L28.4,118.9L29.0,118.3L29.2,117.9L29.4,117.2L29.6,116.5L29.5,115.8L29.9,110.2L29.4,108.0L29.4,106.8L29.6,103.5L29.6,103.1L29.2,100.2L29.2,99.0L29.3,98.4L30.2,97.7L30.5,97.0L30.8,96.5L31.5,96.5L31.8,95.7L32.2,95.1L32.8,94.8L35.1,94.1L35.3,93.9L36.0,92.6L35.7,92.3L34.8,92.1L34.5,91.8L34.6,91.3L34.8,90.9L35.2,90.6L36.0,90.1L36.4,89.8L36.7,89.3L37.0,88.9L37.2,88.4L37.3,88.1L37.6,87.9L37.5,87.7L37.8,87.8L38.7,87.8L39.0,87.8L39.1,87.6L39.5,87.3L39.6,87.2L40.1,85.7L40.4,85.2L41.1,85.1L41.6,85.4L42.0,85.7L42.4,85.8L43.0,85.8L43.4,85.5L43.9,84.7L45.2,81.4L45.8,80.6L49.1,78.8L49.8,78.0L50.0,77.1L50.2,75.0L50.6,74.2L51.5,73.8L53.6,73.5L54.3,73.2L54.9,73.2L55.6,73.1L56.3,72.8L56.7,72.5L57.1,71.8L57.4,71.1L57.3,70.9L57.9,71.1Z","cx":52.5,"cy":165.7},{"id":"BO.OR","name":"Oruro","d":"M84.7,233.4L89.3,236.9L89.8,237.4L91.2,239.3L93.3,242.5L94.9,246.3L94.6,246.8L94.4,247.1L94.1,247.3L93.7,247.5L91.8,248.1L91.6,248.6L91.5,251.3L91.5,251.9L91.6,252.3L91.8,252.6L92.0,252.9L92.3,253.1L93.2,253.5L93.6,253.6L93.9,253.5L94.6,253.4L95.4,253.4L95.7,253.4L96.2,253.7L96.5,253.7L97.1,253.7L97.7,253.9L97.1,254.6L96.3,255.1L95.1,255.8L94.3,256.2L93.8,256.5L93.5,256.8L93.4,257.0L93.3,257.2L93.4,258.2L93.4,258.6L93.3,259.0L93.1,260.3L93.0,260.6L93.1,261.0L93.1,261.1L93.1,261.1L93.5,261.7L94.4,263.8L94.6,264.2L94.8,264.4L95.1,264.6L97.5,266.5L98.3,267.0L100.7,267.9L102.5,268.1L103.9,268.6L104.4,268.9L104.7,269.3L104.8,269.6L106.0,273.5L106.1,273.7L107.2,275.7L108.6,277.6L110.6,280.0L111.1,281.0L111.1,281.2L111.0,281.5L110.7,281.7L110.4,281.9L109.5,282.0L106.2,282.3L100.3,282.7L99.6,282.9L98.5,283.6L95.1,286.7L93.1,288.2L92.0,288.9L86.2,291.5L77.7,295.2L69.1,298.9L65.3,300.2L63.9,300.2L61.3,299.7L48.6,295.4L40.7,292.5L40.6,292.5L41.8,290.6L42.4,289.8L42.8,289.3L43.9,288.9L44.2,288.7L44.0,288.1L43.5,287.5L42.9,287.0L39.9,284.8L39.0,284.4L38.2,283.9L37.2,282.2L36.6,281.5L33.9,279.2L33.0,278.5L31.7,278.1L31.4,277.8L31.0,277.4L30.4,275.9L29.9,275.0L29.6,274.6L29.1,274.3L29.9,273.1L30.2,272.6L30.2,271.9L30.1,271.7L28.5,268.4L28.5,268.3L28.5,268.3L28.5,268.3L28.7,267.9L28.8,267.5L28.7,267.1L28.5,266.7L27.9,265.6L27.6,264.1L27.7,262.6L27.9,261.2L27.9,260.5L27.7,259.9L26.6,258.2L26.5,257.7L26.6,256.1L26.6,255.9L26.2,254.6L26.1,254.4L26.1,254.1L26.0,253.4L25.8,252.9L24.9,252.0L24.5,250.6L25.3,249.8L26.3,248.9L26.5,247.7L26.8,247.6L28.8,246.6L32.5,245.5L33.9,244.8L36.3,243.0L37.3,242.1L39.7,238.9L41.3,237.6L41.5,237.4L43.3,236.6L44.2,236.4L47.5,236.1L51.9,236.3L52.7,236.5L54.9,237.7L55.9,238.0L56.5,238.3L61.9,242.5L62.1,242.5L62.2,242.5L62.6,242.6L62.9,242.5L63.6,242.1L63.8,241.9L63.9,241.6L64.0,241.4L64.1,241.1L64.1,240.9L64.1,240.7L64.0,240.6L63.9,240.2L63.6,239.8L63.5,239.6L63.5,239.3L63.4,238.9L63.5,238.7L63.6,238.5L64.1,238.1L68.7,235.2L69.4,234.7L72.8,232.3L76.0,230.3L76.6,230.1L80.3,229.0L80.5,229.0L80.8,229.0L81.1,229.1L81.3,229.2L81.5,229.3L81.9,229.6L82.1,229.8L82.3,230.1L82.5,230.4L82.8,231.2L83.3,231.9L84.0,232.7L84.1,232.8Z","cx":65.1,"cy":265.7},{"id":"BO.PA","name":"Pando","d":"M129.1,28.1L129.1,28.1L127.6,28.3L127.2,28.5L126.8,28.8L126.2,29.3L125.8,29.9L125.6,30.5L125.4,30.7L123.0,31.9L122.5,32.3L121.9,32.8L121.3,33.2L120.7,33.0L120.1,32.8L119.6,32.7L118.9,32.9L118.8,33.4L119.0,33.9L119.1,34.6L119.1,35.3L119.1,35.9L118.8,36.3L118.2,36.8L117.0,37.3L116.3,37.4L115.9,37.3L115.8,37.0L115.5,36.6L115.1,36.2L114.8,36.0L114.4,36.3L114.0,36.8L113.9,37.4L114.1,37.6L114.6,37.7L115.1,38.1L115.4,38.6L115.6,39.1L115.2,39.9L114.2,39.9L113.0,39.5L111.9,39.3L111.3,39.6L110.2,40.5L109.2,40.8L109.3,40.9L109.4,41.1L109.6,41.3L109.9,41.2L110.5,41.0L110.8,41.1L111.0,41.5L110.8,42.1L110.4,42.7L110.1,43.9L109.7,44.4L109.3,44.7L108.9,44.4L108.6,44.8L108.3,45.6L108.3,46.6L108.2,47.6L107.5,48.1L107.0,48.1L106.6,47.9L106.2,48.1L106.1,48.7L106.4,49.7L106.4,50.2L106.2,50.8L105.2,52.0L104.9,52.5L104.8,53.1L105.0,53.5L105.3,53.8L105.5,54.1L105.2,54.7L103.7,55.0L103.6,55.6L103.4,56.2L102.6,56.4L100.7,56.6L99.2,57.6L98.4,57.8L96.5,57.6L94.0,57.8L93.4,58.0L93.1,58.6L93.1,59.3L93.1,60.0L93.1,60.5L92.4,61.3L92.2,61.8L92.4,63.2L92.4,63.9L92.0,64.4L91.5,64.6L90.6,64.6L90.1,64.7L89.7,65.1L89.4,65.6L89.0,65.9L88.5,66.0L88.0,65.9L87.5,65.9L87.1,66.1L87.1,66.7L87.4,67.1L87.7,67.5L87.9,67.9L87.6,68.5L87.2,68.9L86.7,69.2L86.2,69.3L85.7,69.3L85.2,69.4L85.1,69.9L85.3,70.6L85.5,71.1L85.7,71.2L85.9,71.1L86.0,71.0L86.1,71.0L86.3,71.1L86.7,71.6L87.3,72.7L87.7,74.1L87.9,75.5L87.7,76.7L87.3,78.0L87.2,78.6L87.5,79.3L87.5,80.0L87.2,80.6L86.9,81.2L86.7,81.9L86.8,82.4L87.0,82.9L87.1,83.4L86.9,83.9L86.4,84.5L57.9,71.1L57.3,70.9L57.4,71.1L57.1,71.8L56.7,72.5L56.3,72.8L55.6,73.1L54.9,73.2L54.3,73.2L53.6,73.5L51.5,73.8L50.6,74.2L50.2,75.0L50.0,77.1L49.8,78.0L49.1,78.8L45.8,80.6L45.2,81.4L43.9,84.7L43.4,85.5L43.0,85.8L42.4,85.8L42.0,85.7L41.6,85.4L41.1,85.1L40.4,85.2L40.1,85.7L39.6,87.2L39.5,87.3L39.1,87.6L39.0,87.8L38.7,87.8L37.8,87.8L37.5,87.7L36.7,86.5L33.9,81.3L30.9,76.2L28.1,71.0L25.1,65.9L22.3,60.7L19.3,55.6L16.5,50.5L13.5,45.3L13.4,45.1L13.3,45.0L13.3,44.8L13.2,44.6L13.1,44.5L13.0,44.3L12.9,44.1L12.8,43.9L14.8,44.0L15.9,43.9L17.8,43.5L18.7,43.6L19.6,43.8L20.7,44.0L22.2,43.9L24.4,44.2L25.4,44.4L26.4,44.4L26.8,44.4L28.9,45.3L29.0,45.4L29.3,45.4L29.4,45.3L30.1,45.3L31.4,45.7L32.0,45.7L32.7,45.6L33.5,45.3L34.2,45.1L35.1,45.4L35.6,45.6L35.1,46.3L34.8,47.0L34.6,47.7L34.7,48.8L34.8,49.1L35.0,49.3L35.5,49.3L39.5,48.5L40.3,48.1L41.7,47.0L42.9,46.6L43.4,46.6L43.8,46.6L44.3,46.6L44.7,46.5L45.6,45.7L46.1,45.4L47.4,45.3L47.9,45.1L48.5,44.7L49.0,44.1L49.5,43.5L49.8,42.9L50.6,41.2L51.0,40.7L52.5,39.0L53.5,37.2L53.9,36.7L54.6,36.3L55.4,35.9L55.9,35.7L56.3,35.6L57.1,35.8L60.4,35.6L60.9,35.7L61.3,35.8L61.8,36.1L62.9,37.0L63.4,37.2L64.4,36.9L64.8,36.1L65.1,35.1L65.4,34.2L65.7,33.9L66.5,33.2L66.9,32.8L67.4,31.9L67.8,31.6L68.2,31.2L68.7,31.0L69.7,30.5L70.9,30.1L71.4,29.8L71.9,29.3L72.3,28.8L72.4,28.4L72.4,28.2L72.5,28.0L72.8,27.8L73.1,27.7L74.3,27.7L74.6,27.6L74.9,27.5L75.1,27.3L75.2,27.1L75.0,26.5L75.0,26.2L75.4,26.0L76.1,25.9L77.2,25.9L77.7,25.9L78.8,26.2L79.3,26.2L79.6,26.0L79.8,25.7L80.0,25.4L80.2,25.2L80.5,25.0L81.1,25.0L81.4,25.0L82.7,24.3L87.1,19.6L90.8,16.8L91.4,16.5L93.6,15.6L93.9,15.5L94.0,15.2L94.1,14.9L94.2,14.6L94.4,14.4L94.7,14.3L98.0,13.7L99.7,13.8L100.2,13.8L100.8,13.6L101.9,12.9L102.4,12.7L105.1,12.3L105.6,12.1L106.5,11.6L107.0,11.4L108.5,11.2L108.6,11.3L108.7,11.4L108.8,11.5L109.0,11.5L109.1,11.4L109.3,11.1L109.4,11.0L109.9,10.9L110.0,10.9L110.3,11.0L111.1,11.5L111.4,11.6L112.0,11.5L113.2,10.7L113.7,10.5L114.2,10.5L114.6,10.6L115.8,10.8L116.1,10.8L116.4,10.6L116.9,10.2L116.9,10.4L117.0,10.6L117.2,10.8L117.4,10.9L117.6,10.9L117.7,10.6L117.7,10.3L117.8,10.2L118.0,9.6L118.1,9.4L118.3,9.8L118.4,10.1L118.4,10.3L118.6,10.4L118.8,10.6L119.9,10.1L120.3,10.1L120.2,10.7L120.1,11.1L120.2,11.2L120.5,11.2L120.7,11.2L120.7,11.2L121.0,11.0L121.2,11.0L121.4,11.1L121.6,11.4L121.8,11.5L122.6,12.1L123.0,12.3L123.5,12.4L123.8,12.4L124.0,12.3L124.0,12.1L124.2,11.9L124.2,11.8L124.2,11.5L124.3,11.4L124.4,11.3L124.7,11.3L124.9,11.2L125.2,10.9L125.5,10.4L125.6,10.2L125.7,9.7L125.9,9.5L127.1,8.4L127.5,8.0L127.8,8L128.5,8L129.0,8.1L129.8,8.8L130.2,9.7L130.2,9.8L130.6,11.0L130.9,11.3L131.3,11.7L131.6,12.1L131.7,12.5L131.6,13.2L131.0,14.3L130.8,14.9L130.7,16.0L130.8,17.2L131.1,18.3L131.6,19.8L131.7,20.4L131.7,21.6L131.8,21.9L132.1,22.5L132.1,22.8L132.0,23.1L131.6,23.8L131.3,25.2L131.0,25.9L129.9,26.4L129.5,26.9L129.2,27.6Z","cx":74.8,"cy":47.8},{"id":"BO.PO","name":"Potosí","d":"M130.5,258.9L129.6,259.1L129.2,259.1L128.5,258.7L126.4,258.0L126.2,257.9L126.1,257.9L126.1,257.9L125.9,257.9L125.8,258.0L125.0,258.4L124.8,258.4L124.6,258.4L124.5,258.3L124.4,258.2L124.3,258.0L124.2,257.9L124.1,257.8L124.1,257.7L123.9,257.6L123.8,257.5L123.6,257.5L122.8,257.5L122.6,257.5L122.4,257.4L122.3,257.3L122.1,257.2L121.8,257.2L121.7,257.1L121.6,257.0L121.6,256.8L121.5,256.7L121.4,256.6L121.2,256.7L121.0,256.7L120.9,256.8L120.8,256.9L120.7,257.2L120.9,258.2L120.9,258.5L120.9,258.7L121.0,258.9L121.3,259.2L121.5,259.3L121.7,259.4L122.3,259.8L122.6,259.9L122.7,260.2L122.7,260.5L122.5,261.9L122.6,263.1L123.2,266.3L123.2,266.4L123.0,266.7L122.8,266.9L122.2,267.5L122.0,267.6L121.9,267.8L121.9,267.9L121.8,268.1L121.9,268.3L121.9,268.5L122.1,268.6L122.3,268.6L122.4,268.6L122.5,268.6L125.6,267.0L126.1,266.8L127.3,266.5L127.5,266.5L127.6,266.6L127.8,266.6L128.0,266.7L128.1,266.8L128.2,266.9L128.3,267.1L128.3,267.4L128.3,267.7L128.2,268.1L127.9,268.6L127.7,268.8L127.5,268.9L127.1,269.2L126.1,270.1L126.0,270.2L126.0,270.3L126.0,270.6L126.0,270.9L126.1,271.1L126.1,271.2L126.4,271.4L126.6,271.6L126.7,271.7L126.8,271.9L126.8,272.1L126.9,272.2L126.9,272.6L127.0,272.9L127.0,273.1L127.0,273.2L126.9,273.4L126.5,273.7L126.3,273.9L125.6,275.0L125.2,275.9L125.1,276.0L125.1,276.1L125.0,276.3L125.0,276.3L125.0,276.4L125.6,277.8L126.0,278.6L126.9,279.2L127.1,279.4L127.2,279.6L127.4,280.0L127.5,280.8L127.6,281.1L128.0,281.5L128.8,282.0L129.4,283.0L129.7,283.3L131.1,284.3L131.5,284.7L131.9,285.0L133.2,285.2L133.6,285.5L134.0,285.8L135.7,286.8L136.4,287.0L137.0,286.8L137.2,286.7L137.3,286.8L137.4,286.9L137.5,287.0L138.1,287.0L140.2,286.3L141.1,286.2L141.8,286.4L142.3,286.8L142.7,287.3L143.0,288.0L143.2,288.6L143.2,288.6L143.4,288.8L143.6,289.1L143.7,289.2L143.8,289.5L143.7,289.7L143.6,290.2L143.5,290.9L143.5,291.4L143.7,292.0L143.9,292.5L146.3,295.7L146.9,296.8L147.1,297.5L146.8,297.8L145.9,299.2L143.8,301.5L138.5,304.4L138.0,304.6L135.2,304.8L134.6,305.0L133.7,305.1L133.2,305.3L133.1,305.3L132.5,305.8L132.0,306.2L131.9,306.4L131.8,306.4L131.5,306.5L131.4,306.6L131.3,306.8L131.3,307.4L131.3,307.6L131.4,308.1L131.3,308.6L130.6,309.6L130.4,309.9L130.2,310.1L130.1,310.4L129.8,311.4L129.8,311.7L129.8,312.7L129.9,313.3L131.8,321.2L129.7,326.3L129.6,326.7L129.3,328.4L129.0,329.0L128.3,330.2L128.1,333.9L127.0,338.1L126.9,338.7L126.9,339.1L127.0,339.4L127.1,339.7L127.1,339.9L126.8,343.0L126.8,343.8L126.9,343.9L127.3,345.0L131.2,349.3L133.5,351.0L133.5,352.0L133.5,352.3L133.4,352.7L133.0,353.9L132.6,354.6L132.2,355.0L132.1,355.1L132.0,355.3L131.9,355.6L131.9,356.5L131.8,356.7L131.6,356.9L131.4,357.2L131.2,357.6L130.9,359.0L131.2,359.2L131.3,359.3L131.5,359.4L131.6,359.5L131.7,359.7L131.9,360.0L132.2,360.3L132.4,360.5L132.8,361.2L133.5,362.6L133.9,363.0L134.1,363.2L134.2,363.4L134.5,364.3L135.2,367.8L135.3,367.9L134.8,367.9L127.4,368.0L125.9,367.8L123.9,367.6L123.7,367.6L123.6,367.7L123.4,367.8L123.2,367.9L119.4,368.4L118.5,368.1L117.7,367.5L114.1,363.3L113.5,363.0L111.0,362.5L110.8,362.3L110.5,360.9L109.6,359.9L108.4,359.3L106.1,358.6L105.6,358.7L104.3,363.7L104.0,366.4L103.9,366.9L103.7,367.3L103.6,367.3L103.5,367.2L103.2,367.3L102.9,367.4L102.7,367.7L102.6,368.0L102.4,368.2L101.7,368.7L98.1,369.8L94.8,370.7L94.7,370.9L94.6,371.1L94.5,371.3L94.4,371.3L94.0,371.2L93.4,371.1L93.1,371.0L92.8,371.0L92.4,371.1L91.8,371.7L91.4,372.3L91.2,373.0L90.9,375.2L90.7,375.9L90.3,376.4L90.3,376.6L90.4,377.5L90.4,377.8L90.1,378.0L87.0,379.0L86.2,379.4L85.7,380.0L85.4,380.4L85.0,380.6L84.6,380.8L84.0,380.7L83.5,380.7L83.8,383.5L83.7,384.2L83.4,384.6L81.3,386.3L80.5,387.3L79.0,389.7L70.2,391.6L69.2,391.8L67.3,392L63.0,391.7L62.1,391.4L61.9,391.2L61.3,390.2L61.1,390.2L60.1,390.0L59.8,389.6L59.7,388.8L59.7,386.5L60.6,382.0L60.5,381.4L59.7,379.7L59.5,378.2L59.2,377.6L58.2,375.6L58.0,375.0L58.0,374.4L58.4,372.5L58.4,371.9L58.2,371.2L57.4,370.1L57.3,369.7L57.4,369.5L57.7,368.9L57.8,368.7L57.7,368.0L57.4,367.3L56.9,366.7L56.3,366.3L55.0,365.0L54.3,364.3L54.1,364.0L54.0,363.6L53.6,358.6L53.1,356.3L51.3,353.1L51.1,352.1L51.2,344.8L50.9,343.5L45.1,333.8L44.6,333.4L44.0,333.3L42.8,333.3L42.4,333.3L41.8,332.9L41.2,332.5L40.7,331.2L40.7,327.4L40.9,326.7L41.3,326.1L43.2,324.4L43.3,323.9L42.4,323.2L41.7,322.9L40.4,322.0L37.6,320.7L36.9,320.2L36.3,319.6L35.8,318.8L35.3,317.8L35.3,316.9L35.6,316.2L36.2,315.7L37.8,315.1L36.6,313.1L36.3,312.1L36.4,311.0L36.5,310.1L36.4,309.8L35.5,309.6L34.7,309.1L34.6,308.5L35.0,308.0L38.5,307.0L39.3,306.9L39.7,307.0L40.0,307.0L40.3,307.0L40.5,306.7L40.6,306.4L40.9,305.4L40.9,304.8L41.5,303.4L41.6,303.0L41.5,302.8L41.4,302.7L41.3,302.2L41.3,301.4L41.2,301.2L41.0,300.7L40.8,300.5L39.9,300.2L39.4,299.8L38.5,298.9L37.2,297.8L37.0,297.5L37.1,296.9L37.4,296.4L38.6,295.3L39.1,294.8L40.6,292.5L40.7,292.5L48.6,295.4L61.3,299.7L63.9,300.2L65.3,300.2L69.1,298.9L77.7,295.2L86.2,291.5L92.0,288.9L93.1,288.2L95.1,286.7L98.5,283.6L99.6,282.9L100.3,282.7L106.2,282.3L109.5,282.0L110.4,281.9L110.7,281.7L111.0,281.5L111.1,281.2L111.1,281.0L110.6,280.0L108.6,277.6L107.2,275.7L106.1,273.7L106.0,273.5L104.8,269.6L104.7,269.3L104.4,268.9L103.9,268.6L102.5,268.1L100.7,267.9L98.3,267.0L97.5,266.5L95.1,264.6L94.8,264.4L94.6,264.2L94.4,263.8L93.5,261.7L93.1,261.1L93.1,261.1L93.1,261.0L93.0,260.6L93.1,260.3L93.3,259.0L93.4,258.6L93.4,258.2L93.3,257.2L93.4,257.0L93.5,256.8L93.8,256.5L94.3,256.2L95.1,255.8L96.3,255.1L97.1,254.6L97.7,253.9L97.1,253.7L96.5,253.7L96.2,253.7L95.7,253.4L95.4,253.4L94.6,253.4L93.9,253.5L93.6,253.6L93.2,253.5L92.3,253.1L92.0,252.9L91.8,252.6L91.6,252.3L91.5,251.9L91.5,251.3L91.6,248.6L91.8,248.1L93.7,247.5L94.1,247.3L94.4,247.1L94.6,246.8L94.9,246.3L96.7,245.9L97.4,245.9L97.7,245.9L97.9,245.9L99.0,246.0L100.6,246.0L102.0,246.2L102.3,246.2L102.6,246.2L102.9,246.0L104.5,244.7L105.1,244.2L107.4,242.6L107.7,242.5L108.5,242.3L109.6,242.3L110.6,242.3L110.9,242.4L111.2,242.5L111.8,242.5L111.9,243.1L112.2,243.8L112.6,244.4L113.0,244.7L113.3,244.8L113.5,245.0L113.8,245.2L113.9,246.0L114.2,246.0L116.0,245.6L116.6,245.6L117.1,246.4L118.8,247.3L120.5,248.8L120.7,249.3L121.2,249.7L122.2,250.3L122.9,251.1L123.2,251.6L123.5,252.5L123.9,252.9L124.4,253.3L124.9,253.5L125.9,254.3L127.1,256.4L127.9,257.3L128.1,257.4L128.5,257.5L128.7,257.5L128.8,257.6L129.1,257.9L130.0,258.5L130.3,258.6L130.4,258.6Z","cx":91.9,"cy":322.7},{"id":"BO.SC","name":"Santa Cruz","d":"M217.6,319.3L187.7,319.5L187.5,319.4L187.3,319.3L187.0,318.9L186.2,316.8L185.8,316.2L185.4,316.0L185.2,316.1L185.0,316.3L184.7,316.8L184.5,317.0L184.1,317.3L184.0,317.4L183.8,317.5L183.2,317.6L182.9,317.7L182.7,317.8L182.5,318.0L182.0,318.8L181.9,318.9L181.7,319.0L181.5,319.1L181.2,319.1L179.9,318.8L178.2,318.8L177.6,318.7L177.2,317.4L176.0,305.5L176.0,305.3L175.6,304.6L175.5,304.3L174.3,283.8L174.4,282.0L175.1,277.1L174.8,276.7L173.1,276.9L172.5,276.9L171.8,276.6L171.4,276.6L171.1,276.9L170.8,277.5L170.5,279.6L170.4,280.1L170.2,280.4L169.9,280.6L169.5,280.8L169.1,281.0L168.6,281.0L168.1,281.0L167.7,280.8L167.4,280.6L167.3,280.3L167.2,279.9L166.1,275.9L165.9,275.6L165.7,275.6L165.5,275.5L165.3,275.5L165.0,275.2L164.8,274.8L164.5,274.5L164.1,274.4L163.3,274.3L162.9,274.3L162.6,274.1L162.4,273.8L162.3,273.4L162.2,272.9L162.1,272.6L161.7,271.9L161.2,271.5L160.6,271.2L160.0,270.7L159.8,270.4L159.6,269.6L159.5,269.2L159.1,268.4L159.0,268.1L159.0,267.6L159.1,267.2L159.1,266.8L159.0,266.4L158.7,266.1L158.4,265.8L158.9,264.9L159.6,264.1L159.7,263.8L159.7,263.7L159.5,263.2L159.5,263.0L159.5,262.7L159.6,261.5L159.5,261.3L159.5,261.2L159.5,261.1L159.4,261.0L159.3,261.0L159.2,260.8L158.5,260.5L158.3,260.3L157.8,259.9L157.4,259.5L157.1,259.4L156.6,259.2L156.5,259.2L156.3,259.1L156.2,258.9L156.0,258.5L155.9,258.2L155.9,258.0L155.9,257.6L155.9,257.4L155.5,257.1L155.5,257.0L155.5,256.8L155.6,256.6L155.6,256.4L155.6,256.1L155.5,255.9L155.4,255.8L155.0,255.5L154.6,254.7L154.3,253.6L153.9,252.8L153.3,252.0L152.9,251.3L152.7,251.0L152.5,250.8L152.1,250.5L151.9,250.3L151.5,249.9L150.9,248.4L150.0,246.7L149.7,246.1L148.4,244.8L148.2,244.5L148.1,243.9L148.3,243.1L148.7,242.6L149.3,242.1L151.6,239.8L152.2,239.1L156.6,232.5L156.7,232.2L156.8,232.0L156.7,231.3L156.8,231.0L156.9,230.6L157.1,230.4L158.1,229.7L158.5,229.6L158.7,229.6L159.2,229.6L159.5,229.6L160.1,229.5L160.4,229.5L160.7,229.6L161.2,229.5L161.6,229.5L161.8,228.9L162.0,228.4L161.9,227.8L161.6,227.4L161.4,226.6L161.3,226.4L161.1,226.2L159.8,225.2L157.4,222.4L156.5,221.7L156.2,221.6L155.5,221.3L153.9,220.4L153.5,220.0L151.7,218.1L151.4,217.9L151.2,217.8L150.5,217.6L149.9,217.3L147.3,214.4L146.8,213.7L146.2,211.4L146.2,210.8L146.1,210.6L146.0,210.3L145.6,209.8L145.4,209.5L145.4,209.1L145.8,208.6L145.9,208.0L146.9,206.3L147.0,206.1L146.9,205.8L146.7,205.7L146.4,205.6L146.2,205.3L146.1,204.9L146.2,204.5L146.4,204.0L146.6,203.6L146.9,203.3L147.5,202.9L147.8,202.6L147.9,201.8L147.9,201.7L148.0,201.6L148.8,199.6L148.9,199.2L148.8,198.9L148.6,198.6L148.5,198.3L148.6,198.0L149.1,197.2L148.4,197.2L148.5,196.8L149.1,196.0L149.2,195.5L149.1,195.0L149.0,194.4L149.3,193.9L149.0,193.2L149.2,192.7L149.4,192.2L149.5,191.8L149.4,191.3L148.8,190.6L148.7,190.0L148.7,189.0L148.7,188.8L148.8,188.6L148.9,188.5L148.9,188.1L148.7,187.5L148.4,186.9L148.0,186.5L147.6,186.1L147.9,185.8L148.3,185.8L148.7,185.9L149.1,186.1L149.1,185.6L148.9,185.3L148.3,184.7L149.1,184.7L149.4,184.7L149.6,184.0L186.2,186.0L186.8,185.9L186.9,185.9L186.6,185.7L186.3,185.6L185.3,185.4L185.0,185.2L184.7,185.0L184.0,184.2L183.7,183.8L183.6,183.3L183.5,182.8L183.5,182.1L183.4,181.8L183.3,181.5L182.7,180.8L182.3,180.1L182.1,179.7L181.8,179.4L181.6,179.3L180.7,178.9L180.4,178.7L179.6,178.0L179.3,177.9L179.0,177.9L178.7,177.8L178.3,177.6L177.0,176.2L176.8,175.8L176.7,174.4L176.5,174.1L176.2,173.6L175.8,173.4L175.1,173.1L174.9,172.9L174.6,172.6L171.7,168.1L170.7,165.2L169.8,163.8L169.6,163.3L169.3,162.0L169.4,161.2L169.6,160.8L169.7,160.3L169.7,159.5L169.5,158.0L169.5,154.7L168.9,151.9L170.2,151.3L179.8,148.5L195.3,139.5L219.9,125.3L234.8,116.6L235.0,116.7L235.7,117.4L236.0,117.5L237.3,117.8L238.6,117.7L239.8,117.2L241.7,116.3L242.1,116.3L242.5,116.5L243.5,116.6L244.1,117.0L244.4,117.1L244.7,117.1L245.3,116.9L247.2,117.0L247.4,116.9L247.6,116.3L248.0,116.0L249.2,115.8L249.3,115.7L249.6,115.5L250.0,115.4L250.2,115.7L250.2,116.9L250.7,117.5L252.0,117.6L253.3,117.8L254.2,118.0L254.7,118.4L254.9,118.6L256.8,119.4L258.9,121.1L261.0,122.7L261.9,123.2L262.6,123.4L262.8,123.4L262.9,123.6L263.0,123.9L263.2,124.0L263.4,124.2L265.5,124.7L266.0,125.0L266.2,125.5L266.2,126.3L266.4,127.1L266.6,127.8L267.0,128.4L267.2,128.7L267.8,129.2L267.8,129.3L267.7,129.6L267.9,129.8L268.1,129.9L268.3,130.0L268.4,130.3L268.3,130.4L268.1,131.0L267.8,132.3L267.5,132.9L267.0,133.4L266.3,133.6L266.1,133.7L266.0,134.1L265.9,134.8L265.8,135.4L265.9,135.8L266.3,136.4L266.3,137.2L266.2,138L266.2,138.7L266.5,139.3L268.0,140.5L268.2,141.0L268.6,142.8L269.6,144.9L269.7,146.0L268.9,146.3L269.3,147.3L270.7,148.2L271.0,148.8L271.1,150.6L271.2,153.0L271.3,155.3L271.4,157.7L271.5,160.0L271.6,161.9L271.5,162.2L268.3,162.3L262.9,162.4L264.4,163.6L266.3,165.9L269.3,169.6L271.9,172.6L272.3,173.3L272.5,174.0L272.9,178.3L273.4,184.1L273.7,188.4L273.9,191.5L274.1,194.8L274.7,196.0L275.5,196.3L277.5,196.3L282.8,196.5L288.1,196.7L293.4,196.9L298.7,197.1L303.9,197.3L309.2,197.5L314.5,197.7L319.8,197.9L321.8,197.9L322.5,197.9L323.1,197.6L323.3,197.3L323.6,196.6L323.8,196.5L325.0,196.5L325.3,196.7L325.5,199.6L325.3,199.9L324.7,200.5L324.6,201.0L325.2,202.0L324.9,203.1L322.1,206.3L321.6,207.2L321.4,208.1L321.5,209.4L322.1,211.6L322.2,212.8L322.1,212.9L321.9,213.4L321.8,213.8L321.8,214.1L322.1,215.5L322.5,216.4L322.7,216.9L322.9,219.0L323.1,219.4L323.3,219.9L323.5,220.6L323.5,223.2L323.7,224.3L324.2,225.1L325.2,225.7L326.1,225.8L326.3,225.9L326.7,226.1L327.1,226.5L327.4,226.7L327.6,226.8L328.1,226.8L328.3,226.9L328.7,227.4L329.1,228.3L329.5,228.7L329.9,228.8L330.2,228.8L330.5,228.9L330.9,229.1L331.6,230.0L331.9,230.2L332.9,230.6L333.3,230.8L334.5,231.8L335.3,232.2L336.3,232.4L337.4,232.5L338.2,232.3L338.8,232.2L339.3,232.2L339.9,232.5L340.3,232.9L340.6,233.5L340.7,234.3L340.6,235.0L340.7,235.4L340.7,236.5L340.7,237.1L340.9,237.6L341.2,238.0L341.6,238.4L342.0,238.6L342.4,238.8L342.2,239.8L342.3,240.1L342.8,240.7L343.2,241.4L343.1,242.0L342.3,242.0L344.9,246.6L346.3,250.1L347.3,251.9L348.4,252.5L348.9,252.5L349.4,252.6L349.6,252.9L349.6,253.5L347.7,253.6L347.2,253.7L346.8,254.0L346.4,255.5L345.0,259.6L343.8,263.8L342.4,268.0L341.1,272.2L340.8,273.2L341.9,273.3L342.2,273.6L342.3,274.2L342.5,275.9L342.7,277.1L341.1,277.3L340.6,277.6L340.0,278.9L339.1,280.8L337.2,284.8L335.3,288.8L334.5,290.6L334.5,290.6L334.1,291.3L333.4,293.0L332.6,294.6L332.3,295.3L331.3,297.4L331.5,298.2L333.6,300.1L335.8,302.2L338.7,304.8L338.4,305.2L338.1,305.6L337.7,306.1L337.0,306.4L336.4,306.2L335.9,306.1L335.7,306.3L335.6,306.5L335.4,306.8L335.2,306.9L334.8,307.0L334.2,307.3L333.3,308.6L332.6,308.8L332.4,309L332.0,309.5L331.9,309.6L331.5,309.8L330.3,310.2L330.3,309.5L330.7,307.9L330.8,307.3L330.8,306.1L330.8,305.4L330.7,304.4L330.2,302.8L330.2,301.8L330.3,300.9L330.2,300.4L329.9,300.1L328.8,299.4L326.2,297.8L323.6,296.2L321.0,294.5L318.4,292.9L315.8,291.3L313.2,289.7L310.6,288.1L308.1,286.5L306.6,285.6L305.8,285.0L305.0,284.4L304.5,284.3L302.2,284.3L297.0,284.4L291.7,284.5L286.5,284.5L281.2,284.6L279.0,284.6L274.8,285.6L265.4,287.6L256.0,289.6L246.5,291.7L237.1,293.7L236.5,293.8L235.2,294.0L233.9,294.3L233.3,294.3L230.8,294.7L230.4,294.9L230.2,295.2L229.6,296.7L228.8,298.9L228.1,301.0L227.3,303.2L226.5,305.4L226.1,306.1L225.8,306.9L225.6,307.3L225.4,307.7L225.1,308.4L224.6,309.1L224.1,309.9L223.7,310.6L223.2,311.3L221.9,313.1L220.7,314.9L219.5,316.7L218.3,318.5Z","cx":237.3,"cy":225.1},{"id":"BO.TR","name":"Tarija","d":"M215.9,335.1L215.8,337.0L215.0,340.1L214.0,343.2L213.1,346.5L212.0,350.0L211.1,353.2L209.8,357.5L208.8,360.9L207.6,365.0L206.8,367.6L206.1,370.5L205.4,372.0L205.2,371.9L205.1,371.7L205.0,371.4L204.9,371.1L204.6,370.8L203.4,369.9L202.1,369.3L201.7,368.9L201.5,368.4L201.5,367.4L201.3,367.0L201.4,366.8L201.4,366.5L201.2,365.3L201.1,365.1L200.7,365.0L199.6,364.7L195.4,365.0L186.7,364.9L177.9,364.9L176.8,365.1L176.4,365.3L175.1,366.4L174.8,366.3L173.7,365.3L173.1,365.1L170.5,364.9L169.8,365.0L169.3,365.2L169.2,365.3L169.2,365.5L169.0,366.1L168.9,366.7L168.8,367.0L168.6,367.2L168.3,367.3L168.2,367.3L168.0,367.4L167.7,367.9L167.3,369.6L166.5,371.8L166.3,372.2L165.7,372.5L165.5,372.7L163.4,378.1L162.8,379.1L161.3,380.5L160.9,381.2L159.7,385.7L159.7,387.9L159.4,388.5L158.8,390.8L158.8,391.2L158.3,391.0L158.2,389.5L157.9,389.1L158.1,388.4L158.0,387.6L157.6,386.9L157.0,386.6L156.7,386.4L156.0,384.8L155.7,384.5L155.4,384.5L155.3,384.3L155.2,383.8L155.2,383.5L155.4,382.9L155.4,382.6L155.5,382.3L155.7,382.0L155.9,381.7L156.0,381.3L154.4,379.7L154.0,379.2L153.9,378.5L153.8,378.3L153.3,378.0L153.1,377.7L153.1,377.4L153.3,376.9L153.3,376.5L152.9,376.2L152.3,375.8L152.0,375.3L152.2,374.5L152.6,374.1L152.8,373.7L152.8,373.2L152.5,372.6L152.3,372.2L151.6,371.3L151.3,371.1L150.7,371.0L150.1,370.7L149.6,370.3L149.0,370.2L148.8,370.1L148.5,370.2L148.0,370.4L147.8,370.5L146.7,370.2L144.7,369.1L139.5,367.8L134.8,367.9L135.3,367.9L135.2,367.8L134.5,364.3L134.2,363.4L134.1,363.2L133.9,363.0L133.5,362.6L132.8,361.2L132.4,360.5L132.2,360.3L131.9,360.0L131.7,359.7L131.6,359.5L131.5,359.4L131.3,359.3L131.2,359.2L130.9,359.0L131.2,357.6L131.4,357.2L131.6,356.9L131.8,356.7L131.9,356.5L131.9,355.6L132.0,355.3L132.1,355.1L132.2,355.0L132.6,354.6L133.0,353.9L133.4,352.7L133.5,352.3L133.5,352.0L133.5,351.0L133.6,349.3L134.4,343.3L134.4,342.7L134.4,341.5L134.4,341.2L134.9,339.6L135.2,334.1L135.3,333.9L135.4,333.7L135.5,333.5L135.7,333.4L135.9,333.4L136.0,333.5L136.2,333.7L136.4,333.8L136.9,333.9L137.0,333.9L137.2,333.9L137.5,333.8L137.7,333.7L137.9,333.7L138.0,333.8L138.2,334.0L139.1,335.1L139.1,335.1L139.2,335.1L139.3,335.1L139.5,335.0L139.7,335.0L139.7,335.1L139.9,335.3L140.0,335.3L140.1,335.4L140.3,335.3L140.5,335.3L140.7,335.2L140.8,335.2L140.9,335.3L141.1,335.5L141.3,335.6L141.4,335.7L141.6,335.7L141.9,335.6L142.1,335.7L142.2,335.7L142.4,335.8L142.4,335.9L142.5,336.0L142.5,336.2L142.6,336.4L142.7,336.4L143.0,336.6L143.1,336.6L143.3,336.7L143.4,336.8L143.4,336.9L143.5,337.0L143.6,337.2L143.7,337.3L143.8,337.3L144.2,337.5L144.4,337.6L144.5,337.7L144.6,337.9L144.7,337.9L144.8,337.9L145.1,337.8L145.7,337.7L146.1,337.4L146.3,337.3L146.4,337.1L146.5,336.7L146.5,336.6L146.8,336.1L146.8,336.0L146.8,335.8L146.8,335.4L146.8,335.1L147.0,334.6L147.4,334.0L147.7,333.5L147.9,333.1L148.1,333.0L148.3,332.9L148.5,333.0L148.6,333.0L149.0,333.2L149.2,333.3L149.3,333.3L149.7,333.3L149.8,333.3L150.0,333.4L150.1,333.5L150.1,333.6L150.3,334.0L150.4,334.2L150.5,334.3L151.0,334.6L151.1,334.7L151.3,334.9L151.4,335.1L152.0,335.7L152.0,335.8L152.7,337.3L152.8,337.5L152.9,337.5L153.0,337.7L153.1,337.7L153.3,337.8L153.6,337.7L154.4,337.5L155.0,337.5L155.1,337.5L155.5,337.5L155.6,337.6L155.9,337.8L156.9,338.6L157.9,339.1L158.4,339.2L160.1,339.0L160.5,339.0L161.2,339.3L161.4,339.3L161.6,339.2L161.7,339.2L161.9,339.1L162.0,338.9L162.1,338.8L162.2,338.6L162.3,338.5L162.4,338.3L162.4,338.2L162.4,337.6L162.4,337.4L162.3,337.0L162.3,336.8L162.4,336.6L162.4,336.4L162.5,336.2L162.5,336.1L162.7,335.8L162.8,335.6L162.9,335.5L162.9,335.3L162.7,333.5L162.7,332.8L162.8,332.5L162.8,332.3L163.0,331.8L163.2,331.9L163.5,332.3L163.9,332.5L164.3,332.5L164.7,332.4L165.3,332.4L165.8,332.5L166.1,332.7L166.2,333.3L166.4,333.4L167.2,333.4L167.3,333.4L167.7,333.3L167.9,333.4L167.7,333.7L167.6,334.0L167.8,334.4L168.4,334.9L168.4,334.9L168.9,334.9L171.5,335.0Z","cx":171.4,"cy":352.7}]};
-const MAPNAME={'El Beni':'Beni'};
-const ST=['Aplicación','Revisión','Evaluación','Entrevista con RR.HH.','Entrevista con el supervisor','Oferta','Respuesta del candidato','Contratación'];
-const GEN=[['Masculino','g-m','#0075de'],['Femenino','g-f','#ffb110'],['Indefinido','g-i','#02093a']];
-const AGES=['18-24','25-34','35-44','45-54','55-64','65+'];
-const DEPS=['La Paz','Cochabamba','Santa Cruz','Oruro','Tarija'];
-const TABS=[['resumen','Resumen'],['postulantes','Postulantes'],['donde','Dónde viven'],['proceso','Proceso de contratación'],['contratados','Contratados'],['alternativos','Candidatos alternativos'],['consultas','Consultas']];
-const NAVQ={postulantes:'¿Quiénes postularon y a qué cargo?',donde:'¿De qué departamentos vienen?',proceso:'¿En qué etapa se quedan los postulantes?',contratados:'¿A quién se contrató y cuándo?',alternativos:'¿Quién más podría ocupar un cargo?',consultas:'Tiempos, canales, rechazos, reclutadores y test'};
-const FKEY={c:'c',g:'g',d:'d',k:'k'};
-const FALL={c:'Todos los cargos',g:'Todos los géneros',d:'Todo el país',k:'Todos los canales'};
-const filt={c:'',g:'',d:'',k:''};
-const view={post:'genero',who:'post',seg:'cargo',hi:'',cons:'tiempos',rec:false};
-let tab='resumen',sel='';
-
+/* Catálogos cerrados: los mismos valores del archivo de RR.HH. */
+const CAT={
+  genero:['Femenino','Masculino','Indefinido'],
+  rango_edad:['18-24','25-34','35-44','45-54','55-64','65+'],
+  residencia:['La Paz','Cochabamba','Santa Cruz de la Sierra','Oruro','Tarija','Sucre','Potosí','Trinidad','Cobija'],
+  experiencia:['< 1 año','2-4 años','>4 años'],
+  nivel_profesional:['Junior','Medio','Senior'],
+  id_cargo:[['C1','Asistente de Marketing'],['C2','Coordinador de Adquisiciones'],['C3','Asistente de Ventas'],['C4','Diseñador Gráfico'],['C6','Gerente Comercial'],['C7','Analista de Sistemas'],['C8','Oficial de Créditos'],['C9','Subgerente de Marketing']],
+  canal:['facebook','LinkedIn','Bolsa de trabajo']
+};
+/* Solo para la copia fuera de claude.ai (p. ej. GitHub Pages): URL de la aplicación web de Google Apps Script que recibe los registros. */
+const ENDPOINT='';
+const BASE=40; /* postulantes ya existentes en el archivo auditado */
 const $=id=>document.getElementById(id);
 const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
-const nf=(x,d=1)=>Number(x).toLocaleString('es-BO',{minimumFractionDigits:d,maximumFractionDigits:d});
-const pc=(a,b)=>b?Math.round(a*100/b)+'%':'0%';
-const pl=(n,s,p)=>n+' '+(n===1?s:p);
-const of=(a,b,s,p)=>`${a} de ${pl(b,s,p)} (${pc(a,b)})`;
-const ofP=(a,b)=>of(a,b,'postulante','postulantes');
-const cnt=(arr,key)=>{const m=new Map();arr.forEach(r=>{const k=typeof key==='function'?key(r):r[key];m.set(k,(m.get(k)||0)+1)});return m};
-const desc=m=>[...m.entries()].sort((a,b)=>b[1]-a[1]||String(a[0]).localeCompare(String(b[0]),'es'));
-const mean=a=>a.reduce((s,x)=>s+x,0)/a.length;
-const days=(a,b)=>Math.round((Date.parse(b)-Date.parse(a))/864e5);
-const dmy=s=>s.slice(8,10)+'/'+s.slice(5,7)+'/'+s.slice(0,4);
-const age=e=>e==='65+'?'65 años o más':e.replace('-',' a ')+' años';
-const list=a=>a.length<2?a.join(''):a.slice(0,-1).join(', ')+' y '+a[a.length-1];
-const stPill=r=>`<span class="pill ${r.h?'hired':r.s==='Rechazado'?'rej':r.s==='En proceso'?'open':''}">${r.s}</span>`;
-const data=()=>ROWS.filter(r=>(!filt.c||r.c===filt.c)&&(!filt.g||r.g===filt.g)&&(!filt.d||r.d===filt.d)&&(!filt.k||r.k===filt.k));
-const byName=(a,b)=>a.n.localeCompare(b.n,'es');
+const FIELDS=['nombre','email','genero','rango_edad','residencia','experiencia','nivel_profesional','id_cargo','canal','consentimiento'];
+let db=null,col=null,docs=[],mode='pending',busy=false;
 
-/* piezas */
-const people=(rows,sub,right)=>`<ul class="people">${rows.map(r=>`<li><div><b>${esc(r.n)}</b><small>${esc(sub(r))}</small></div>${right?right(r):stPill(r)}</li>`).join('')}</ul>`;
-const detail=(title,body)=>`<section class="detail" id="detail" tabindex="-1" aria-live="polite"><div class="dhead"><h3>${title}</h3><button class="btn text" type="button" data-sel="">Cerrar</button></div>${body}</section>`;
-const hint=t=>`<p class="detail hint">${t}</p>`;
-const seg=(key,opts,scroll)=>`<div class="seg${scroll?' scroll':''}" role="group">${opts.map(([v,l])=>`<button type="button" data-set="${key}=${esc(v)}" aria-pressed="${view[key]===v}">${esc(l)}</button>`).join('')}</div>`;
-const card=h=>`<article class="card">${h}</article>`;
-const few=(n,what)=>n<10?`<p class="note">Basado en ${pl(n,'caso','casos')}${what?' '+what:''}: tómelo como referencia, no como conclusión.</p>`:'';
-const noData=()=>card(`<h2>Ningún postulante coincide con estos filtros</h2><p class="empty">Cambie los filtros o toque «Limpiar».</p>`);
+for(const k of Object.keys(CAT)){
+  $(k).innerHTML='<option value="">Selecciona una opción</option>'+CAT[k].map(o=>Array.isArray(o)?`<option value="${o[0]}">${esc(o[1])}</option>`:`<option>${esc(o)}</option>`).join('');
+}
+function check(k){
+  const el=$(k);let m='';
+  if(k==='nombre'){const v=el.value.trim().replace(/\s+/g,' ');
+    if(!v)m='Escribe tu nombre completo.';
+    else if(!/^[\p{L}][\p{L}\s.'-]+$/u.test(v))m='El nombre solo puede tener letras, espacios, guion o apóstrofo.';
+    else if(v.split(' ').length<2)m='Escribe al menos un nombre y un apellido.';}
+  else if(k==='email'){const v=el.value.trim();
+    if(!v)m='Escribe tu correo electrónico.';
+    else if(!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v))m='El correo no tiene un formato válido. Ejemplo: nombre@dominio.com';}
+  else if(k==='consentimiento'){if(!el.checked)m='Marca la autorización para poder registrar tu postulación.';}
+  else{const ok=CAT[k].some(o=>(Array.isArray(o)?o[0]:o)===el.value);if(!ok)m='Selecciona una opción de la lista.';}
+  $('e-'+k).textContent=m;el.setAttribute('aria-invalid',m?'true':'false');el.closest('.fld').classList.toggle('bad',!!m);
+  return !m;
+}
+FIELDS.forEach(k=>{const el=$(k);el.setAttribute('aria-describedby','e-'+k);el.addEventListener(k==='nombre'||k==='email'?'blur':'change',()=>check(k))});
+function hoy(){return new Intl.DateTimeFormat('en-CA',{timeZone:'America/La_Paz',year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date())}
+function nextNro(){const used=docs.map(d=>parseInt(String(d.nro_postulante||'').slice(1))).filter(n=>!isNaN(n));return 'P'+(Math.max(BASE,...used)+1)}
+function status(t,c){const s=$('status');s.textContent=t;s.className='pill '+(c||'')}
 
-/* ---------- Resumen */
-function vResumen(d){
-  const N=d.length,h=d.filter(r=>r.h).length,p=d.filter(r=>r.s==='En proceso').length,rj=d.filter(r=>r.s==='Rechazado').length,cl=N-h-p-rj;
-  const head=h?`Se contrató a ${ofP(h,N)}`:`No hay contratados entre ${pl(N,'postulante','postulantes')}`;
-  return card(`<h2>${head}</h2>
-   <div class="kpis">
-    <div class="kpi"><b>${N}</b><span>Postulantes</span><small>${N===40?'en todo el proceso':'de 40 en todo el proceso'}</small></div>
-    <div class="kpi accent"><b>${h}</b><span>Contratados</span><small>${ofP(h,N)}</small></div>
-    <div class="kpi"><b>${p}</b><span>En proceso</span><small>${ofP(p,N)}</small></div>
-    <div class="kpi"><b>${rj}</b><span>Rechazados</span><small>${ofP(rj,N)}</small></div>
-   </div>
-   ${cl?`<p class="note">${cl===1?'Además, 1 postulante tiene':'Además, '+cl+' postulantes tienen'} su proceso cerrado (sin contratación).</p>`:''}
-   <div class="nav">${TABS.slice(1).map(([k,l],i)=>`<button type="button" data-go="${k}"><b>${l}</b><span>${NAVQ[k]}</span></button>`).join('')}</div>`);
-}
+$('f').addEventListener('submit',async e=>{
+  e.preventDefault();if(busy)return;
+  const bad=FIELDS.filter(k=>!check(k));$('e-form').textContent='';
+  if(bad.length){$('e-form').textContent=`Revisa ${bad.length===1?'el campo marcado':'los '+bad.length+' campos marcados'} antes de enviar.`;$(bad[0]).focus();return}
+  const cargo=CAT.id_cargo.find(o=>o[0]===$('id_cargo').value);
+  const rec={nombre:$('nombre').value.trim().replace(/\s+/g,' ').toUpperCase(),email:$('email').value.trim().toLowerCase(),genero:$('genero').value,rango_edad:$('rango_edad').value,
+    residencia:$('residencia').value,experiencia:$('experiencia').value,nivel_profesional:$('nivel_profesional').value,id_cargo:cargo[0],cargo:cargo[1],canal:$('canal').value,
+    fecha_aplicacion:hoy(),creado:new Date().toISOString(),estado:'En proceso',etapa_alcanzada:1,consentimiento:true};
+  busy=true;$('send').disabled=true;$('send').textContent='Guardando…';
+  try{
+    if(mode==='db'){rec.nro_postulante=nextNro();await col.add(rec)}
+    else if(mode==='endpoint'){const r=await fetch(ENDPOINT,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify(rec)});const j=await r.json();if(!j.ok)throw new Error(j.error||'rechazado');rec.nro_postulante=j.nro_postulante||''}
+    else throw {code:'no_storage'};
+    $('f').hidden=true;const d=$('done');d.hidden=false;
+    d.innerHTML=`<b>Postulación registrada</b><p>${esc(rec.nombre)} quedó registrado${rec.nro_postulante?' como '+esc(rec.nro_postulante):''} para ${esc(rec.cargo)}, con fecha de aplicación ${rec.fecha_aplicacion.split('-').reverse().join('/')}.</p><button class="btn ghost" type="button" id="again">Registrar otra postulación</button>`;
+    $('again').addEventListener('click',()=>{$('f').reset();FIELDS.forEach(k=>{$('e-'+k).textContent='';$(k).closest('.fld').classList.remove('bad')});d.hidden=true;$('f').hidden=false;$('nombre').focus()});
+  }catch(err){
+    const c=err&&err.code;
+    $('e-form').textContent=c==='invalid_argument'?'No se guardó: tu cuenta no tiene permiso para registrar en esta página. Pide acceso de editor al responsable de RR.HH.'
+      :c==='no_storage'?'No se guardó: este enlace no tiene almacenamiento conectado.'
+      :c==='quota_exceeded'?'No se guardó: la base de datos está llena. Avisa a RR.HH.'
+      :'No se guardó por un problema de conexión. Tus datos siguen en el formulario: vuelve a enviar.';
+  }finally{busy=false;$('send').disabled=mode==='none';$('send').textContent='Registrar postulación'}
+});
 
-/* ---------- Postulantes */
-function vPostulantes(d){
-  const N=d.length,ctl=seg('post',[['genero','Ver por género'],['cargo','Ver por cargo']]);
-  let head,chart,det;
-  if(view.post==='genero'){
-    const g=GEN.map(([n,c])=>({n,c,rows:d.filter(r=>r.g===n)})).filter(x=>x.rows.length),mx=Math.max(...g.map(x=>x.rows.length)),top=g.filter(x=>x.rows.length===mx);
-    head=g.length===1?`Los ${pl(N,'postulante','postulantes')} son de género ${g[0].n.toLowerCase()}`:top.length>1?`${list(top.map(x=>x.n))} empatan con ${mx} postulantes cada uno`:`${top[0].n} es el género con más postulantes: ${ofP(mx,N)}`;
-    chart=`<div class="bars">${g.map(x=>`<button class="row wide" type="button" data-sel="g:${x.n}" aria-pressed="${sel==='g:'+x.n}"><span class="lab">${x.n}</span><span class="track"><span class="bar ${x.c}" style="flex:0 0 ${x.rows.length/mx*100}%">${x.rows.length}</span></span><span class="val"><b>${x.rows.length}</b> de ${N} postulantes (${pc(x.rows.length,N)})</span></button>`).join('')}</div>`;
-    const s=sel.startsWith('g:')&&g.find(x=>'g:'+x.n===sel);
-    det=s?detail(`${s.n}: ${pl(s.rows.length,'postulante','postulantes')}`,people([...s.rows].sort(byName),r=>`${r.c} · ${r.d}`)):hint('Toque una barra para ver los nombres.');
-  }else{
-    const c=desc(cnt(d,'c')).map(([n,k])=>({n,k,rows:d.filter(r=>r.c===n)})),mx=c[0].k,top=c.filter(x=>x.k===mx);
-    head=c.length===1?`${c[0].n} tiene ${pl(N,'postulante','postulantes')}`:top.length>1?`${list(top.map(x=>x.n))} son los cargos con más postulantes: ${mx} cada uno`:`${top[0].n} es el cargo con más postulantes: ${ofP(mx,N)}`;
-    chart=`<div class="legend">${GEN.map(([n,cl,col])=>{const k=d.filter(r=>r.g===n).length;return k?`<span><i style="background:${col}"></i>${n}: ${k}</span>`:''}).join('')}</div>
-     <div class="bars">${c.map(x=>`<button class="row wide" type="button" data-sel="c:${esc(x.n)}" aria-pressed="${sel==='c:'+x.n}"><span class="lab">${esc(x.n)}</span><span class="track" style="width:${Math.max(x.k/mx*100,14)}%">${GEN.map(([n,cl])=>{const k=x.rows.filter(r=>r.g===n).length;return k?`<span class="bar ${cl}" style="flex:${k} 1 0" title="${n}: ${k}">${k}</span>`:''}).join('')}</span><span class="val"><b>${x.k}</b> ${x.k===1?'postulante':'postulantes'} · ${GEN.map(([n])=>{const k=x.rows.filter(r=>r.g===n).length;return k?k+' '+n.toLowerCase():''}).filter(Boolean).join(', ')}</span></button>`).join('')}</div>`;
-    const s=sel.startsWith('c:')&&c.find(x=>'c:'+x.n===sel);
-    det=s?detail(`${esc(s.n)}: ${pl(s.k,'postulante','postulantes')}`,people([...s.rows].sort((a,b)=>GEN.findIndex(g=>g[0]===a.g)-GEN.findIndex(g=>g[0]===b.g)||byName(a,b)),r=>`${r.g} · ${r.d}`)):hint('Toque un cargo para ver los nombres. El número dentro de cada tramo es la cantidad de postulantes de ese género.');
-  }
-  return card(`<h2>${head}</h2>${ctl}${chart}${few(N)}${det}`);
+let pendingDel=null;
+function renderList(){
+  $('n').textContent=docs.length+(docs.length===1?' registro':' registros');
+  if(!docs.length){$('list').innerHTML='<p class="empty">Aún no hay registros. El primero aparecerá aquí al enviar el formulario.</p>';return}
+  $('list').innerHTML=docs.map(d=>`<div class="item"><div><b>${esc(d.nro_postulante||'')} · ${esc(d.nombre||'')}</b><small>${esc(d.cargo||'')} · ${esc(d.residencia||'')} · ${esc(d.canal||'')}</small><small>${esc(d.genero||'')} · ${esc(d.rango_edad||'')} · ${esc(d.experiencia||'')} · ${esc(d.nivel_profesional||'')} · ${esc(d.email||'')} · ${esc(String(d.fecha_aplicacion||'').split('-').reverse().join('/'))}</small></div>
+    <button class="btn text" type="button" data-id="${esc(d._id)}">${pendingDel===d._id?'Confirmar borrado':'Borrar'}</button></div>`).join('');
 }
+$('list').addEventListener('click',async e=>{const b=e.target.closest('button[data-id]');if(!b)return;const id=b.dataset.id;
+  if(pendingDel!==id){pendingDel=id;renderList();return}
+  pendingDel=null;try{await col.doc(id).delete()}catch(_){renderList()}});
 
-/* ---------- Dónde viven */
-function mapSvg(counts,unit){
-  const mx=Math.max(0,...Object.values(counts)),idx=v=>v?Math.min(5,Math.ceil(v/mx*5)):0;
-  const fill=['#ffffff','var(--s1)','var(--s2)','var(--s3)','var(--s4)','var(--s5)'];let p='',t='';
-  MAP.deps.forEach(dp=>{const nm=MAPNAME[dp.name]||dp.name,v=counts[nm]||0,i=idx(v),col=i>=5?'#fff':'#000';
-    p+=v?`<path class="has${sel==='d:'+nm?' sel':''}" tabindex="0" role="button" aria-label="${nm}: ${v} ${unit}. Ver nombres" data-sel="d:${nm}" d="${dp.d}" fill="${fill[i]}"><title>${nm}: ${v} ${unit}</title></path>`:`<path d="${dp.d}" fill="#fff"><title>${nm}: 0 ${unit}</title></path>`;
-    t+=v?`<text class="ct" x="${dp.cx}" y="${dp.cy+2}" fill="${col}">${v}</text><text class="nm" x="${dp.cx}" y="${dp.cy+15}" fill="${col}">${nm}</text>`:`<text class="nm" x="${dp.cx}" y="${dp.cy+4}" fill="#000" fill-opacity=".6">${nm}</text>`});
-  let sc='<span><i style="background:#fff"></i>0</span>';
-  if(mx){const seen=new Set();for(let v=1;v<=mx;v++){const i=idx(v);if(seen.has(i))continue;seen.add(i);let hi=v;while(hi<mx&&idx(hi+1)===i)hi++;sc+=`<span><i style="background:${fill[i]}"></i>${v===hi?v:v+' a '+hi}</span>`}}
-  return `<div class="map"><svg viewBox="0 0 ${MAP.w} ${MAP.h}" role="img" aria-label="Mapa de Bolivia: ${unit} por departamento">${p}${t}</svg><div class="scale"><span>${unit[0].toUpperCase()+unit.slice(1)}:</span>${sc}</div></div>`;
-}
-function vDonde(d){
-  const hired=view.who==='hired',base=hired?d.filter(r=>r.h):d,unit=hired?'contratados':'postulantes',one=hired?'contratado':'postulante';
-  const ctl=`<div class="ctl">${seg('who',[['post','Postulantes'],['hired','Contratados']])}${seg('seg',[['cargo','Segmentar por cargo'],['genero','por género'],['edad','por edad']])}</div>`;
-  if(!base.length)return card(`<h2>No hay contratados con estos filtros</h2>${ctl}<p class="empty">Toque «Postulantes» o cambie los filtros.</p>`);
-  const key=view.seg==='cargo'?'c':view.seg==='genero'?'g':'e',lab=v=>key==='e'?age(v):v;
-  const order=key==='c'?desc(cnt(base,'c')).map(x=>x[0]):key==='g'?GEN.map(g=>g[0]).filter(g=>base.some(r=>r.g===g)):AGES.filter(a=>base.some(r=>r.e===a));
-  if(view.hi&&!order.includes(view.hi))view.hi='';
-  const shown=view.hi?base.filter(r=>r[key]===view.hi):base,T=base.length;
-  const counts={};shown.forEach(r=>{counts[r.d]=(counts[r.d]||0)+1});
-  const deps=DEPS.filter(x=>counts[x]).sort((a,b)=>counts[b]-counts[a]||DEPS.indexOf(a)-DEPS.indexOf(b)),mx=counts[deps[0]],top=deps.filter(x=>counts[x]===mx);
-  const what=view.hi?`${unit} de ${key==='c'?lab(view.hi):key==='g'?'género '+lab(view.hi).toLowerCase():lab(view.hi)}`:unit;
-  let head=deps.length===1?`Los ${pl(shown.length,one,unit)}${view.hi?' de este grupo':''} ${shown.length===1?'vive':'viven'} en ${deps[0]}`:top.length>1?`${list(top)} tienen la misma cantidad de ${what}: ${mx} cada uno`:`${top[0]} es donde viven más ${what}: ${of(mx,shown.length,one,unit)}`;
-  if(!view.hi&&key!=='c'&&order.length>1){const sg=desc(cnt(base,key)),tm=sg.filter(x=>x[1]===sg[0][1]);if(tm.length===1)head+=`. ${key==='g'?'Género':'Edad'} más frecuente: ${lab(sg[0][0]).toLowerCase()}, ${sg[0][1]} de ${T}`}
-  const chips=`<div class="ctl"><span class="ctl-lab">Mostrar en el mapa</span>${seg('hi',[['','Todos'],...order.map(v=>[v,`${lab(v)} (${base.filter(r=>r[key]===v).length})`])],true)}</div>`;
-  const rows=deps.map(x=>{const rs=shown.filter(r=>r.d===x),br=order.map(v=>[v,rs.filter(r=>r[key]===v).length]).filter(y=>y[1]);
-    return `<button class="row" type="button" data-sel="d:${x}" aria-pressed="${sel==='d:'+x}"><span class="lab">${x}: ${of(rs.length,shown.length,one,unit)}</span><span class="val">${br.map(([v,k])=>`${lab(v)} ${k}`).join(' · ')}</span></button>`}).join('');
-  const s=sel.startsWith('d:')&&deps.includes(sel.slice(2))&&sel.slice(2);
-  const det=s?detail(`${s}: ${pl(counts[s],one,unit)}`,people(shown.filter(r=>r.d===s).sort((a,b)=>order.indexOf(a[key])-order.indexOf(b[key])||byName(a,b)),r=>key==='c'?`${r.c} · ${r.g}`:key==='g'?`${r.g} · ${r.c}`:`${age(r.e)} · ${r.c}`)):hint('Toque un departamento en el mapa o en la lista para ver los nombres.');
-  const empty=9-Object.keys(counts).length;
-  return card(`<h2>${head}</h2>${ctl}${chips}<div class="map-grid">${mapSvg(counts,unit)}<div class="bars">${rows}<p class="note" style="padding:8px">${empty} de los 9 departamentos no tienen ${unit}${view.hi?' en este grupo':''}.${shown.length<10?` Basado en ${pl(shown.length,'caso','casos')}.`:''}</p></div></div>${det}`);
-}
-
-/* ---------- Proceso de contratación */
-function vProceso(d){
-  const N=d.length,reach=ST.map((_,k)=>d.filter(r=>r.t>=k+1).length),stay=ST.map((_,k)=>d.filter(r=>r.t===k+1).length);
-  let w=-1,wd=0;for(let k=0;k<7;k++){if(stay[k]>wd){wd=stay[k];w=k}}
-  let nx=w+1;while(nx<7&&!reach[nx])nx++;
-  const head=w<0?`Los ${pl(N,'postulante fue contratado','postulantes fueron contratados')}`:reach[w+1]?`La mayor pérdida ocurre entre ${ST[w]} y ${ST[w+1]}: pasan ${reach[w+1]} de ${reach[w]}`:`Ningún postulante pasó de ${ST[w]}: ${wd} de ${N} se quedaron ahí`;
-  const rows=ST.map((e,k)=>reach[k]||k===0?`<button class="row wide" type="button" data-sel="s:${k}" aria-pressed="${sel==='s:'+k}"><span class="lab">${e}</span><span class="track"><span class="bar ${k===w?'worst':''}" style="flex:0 0 ${Math.max(reach[k]/N*100,7)}%">${reach[k]}</span></span><span class="val"><b>${reach[k]}</b> de ${N} (${pc(reach[k],N)})${k?` · ${pc(reach[k],reach[k-1])} de la etapa anterior`:''}${k<7&&stay[k]?` · ${stay[k]===1?'1 no avanzó':stay[k]+' no avanzaron'}${k===w?' <span class="pill rej">Mayor pérdida</span>':''}`:''}</span></button>`:`<div class="row wide" style="cursor:default"><span class="lab">${e}</span><span class="val">Nadie llegó a esta etapa</span></div>`).join('');
-  let det=hint('Toque una etapa para ver quiénes llegaron hasta ella.');
-  if(sel.startsWith('s:')){const k=+sel.slice(2),here=d.filter(r=>r.t===k+1).sort(byName),on=d.filter(r=>r.t>k+1).sort(byName);
-    const sub=r=>r.m?`${r.c} · ${r.m}`:r.c;
-    det=detail(`Llegaron a ${ST[k]}: ${pl(reach[k],'persona','personas')}`,k===7?people(here,r=>r.c):`${here.length?`<span class="dgroup">No avanzaron de esta etapa (${here.length})</span>${people(here,sub)}`:''}${on.length?`<span class="dgroup">Siguieron a ${ST[k+1]} (${on.length})</span>${people(on,r=>r.c)}`:''}`)}
-  return card(`<h2>${head}</h2><p class="note">Cada barra muestra cuántos postulantes llegaron a la etapa, sobre el total y sobre la etapa anterior.</p><div class="bars">${rows}</div>${few(N)}${det}`);
-}
-
-/* ---------- Contratados */
-function vContratados(d){
-  const h=d.filter(r=>r.h).sort((a,b)=>((a.f&&a.f[7])||'9').localeCompare((b.f&&b.f[7])||'9')||byName(a,b));
-  if(!h.length)return card(`<h2>No hay contratados con estos filtros</h2><p class="empty">Cambie los filtros o toque «Limpiar».</p>`);
-  const cg=new Set(h.map(r=>r.c)).size,dd=h.filter(r=>r.x!=null).map(r=>r.x);
-  const head=`Se contrató a ${pl(h.length,'persona','personas')} en ${pl(cg,'cargo','cargos')}`;
-  const rows=h.map((r,i)=>`<li><button class="row hire" type="button" data-sel="h:${ROWS.indexOf(r)}" aria-pressed="${sel==='h:'+ROWS.indexOf(r)}"><span class="ord">${i+1}</span><span class="who"><b>${esc(r.n)}</b><span>${esc(r.c)}</span><span>${r.f&&r.f[7]?`Contratación: ${dmy(r.f[7])} · ${r.x} días desde que postuló`:'Fecha de contratación no registrada'}</span></span></button></li>`).join('');
-  let det=hint('Toque a una persona para ver su recorrido por las etapas.');
-  if(sel.startsWith('h:')){const r=ROWS[+sel.slice(2)];if(r&&h.includes(r)){
-    det=detail(esc(r.n),`<p class="note">${r.c} · ${r.g} · ${age(r.e)} · vive en ${r.d} · postuló por ${r.k} · reclutador: ${esc(r.r)}</p>${r.f?`<ul class="steps">${ST.map((e,k)=>`<li><span>${e}</span><b>${r.f[k]?dmy(r.f[k]):'Sin fecha'}</b></li>`).join('')}</ul>`:'<p class="note">Las fechas de sus etapas no están registradas.</p>'}`)}}
-  return card(`<h2>${head}</h2><p class="note">En el orden en que se cerró cada contratación.${dd.length?` Tomó entre ${Math.min(...dd)} y ${Math.max(...dd)} días desde la postulación.`:''}</p><ol class="hires">${rows}</ol>${dd.length&&dd.length<h.length?`<p class="note">Los días se calculan en ${pl(dd.length,'contratación','contrataciones')} con fecha registrada.</p>`:''}${det}`);
-}
-
-/* ---------- Candidatos alternativos */
-function vAlternativos(d){
-  const a=d.filter(r=>r.a),cargos=desc(cnt(d,'c')).map(x=>x[0]),hiredIn=c=>d.filter(r=>r.c===c&&r.h).length;
-  cargos.sort((x,y)=>(hiredIn(x)?1:0)-(hiredIn(y)?1:0));
-  const con=cargos.filter(c=>a.some(r=>r.c===c)).length;
-  const head=a.length?`Hay ${pl(a.length,'candidato alternativo','candidatos alternativos')} para ${con} de ${pl(cargos.length,'cargo','cargos')}`:'No hay candidatos alternativos con estos filtros';
-  const groups=cargos.map(c=>{const s=a.filter(r=>r.c===c).sort((x,y)=>y.p-x.p||byName(x,y)).slice(0,3),hn=hiredIn(c);
-    return `<div class="group"><div class="ghead"><h3>${esc(c)}</h3><span class="pill ${hn?'':'rej'}">${hn?pl(hn,'contratado','contratados'):'Cargo sin contratado'}</span></div>${s.length?s.map((r,i)=>`<button class="row wide" type="button" data-sel="a:${ROWS.indexOf(r)}" aria-pressed="${sel==='a:'+ROWS.indexOf(r)}"><span class="lab">${i+1}. ${esc(r.n)}</span><span class="track"><span class="bar" style="flex:0 0 ${r.p}%">${r.p}</span></span><span class="val"><b>${r.p}</b> de 100 puntos</span></button>`).join(''):'<p class="none">Sin candidatos alternativos: los demás postulantes fueron rechazados.</p>'}</div>`}).join('');
-  let det=a.length?hint('Toque a un candidato para ver el detalle de su evaluación.'):'';
-  if(sel.startsWith('a:')){const r=ROWS[+sel.slice(2)];if(r&&a.includes(r))det=detail(`${esc(r.n)}: ${r.p} de 100 puntos`,`<ul class="steps"><li><span>Habilidad cognitiva</span><b>${r.hc} de 100</b></li><li><span>Motivación</span><b>${r.mo} de 5</b></li><li><span>Estado</span><b>${r.s}</b></li><li><span>Llegó hasta</span><b>${ST[r.t-1]}</b></li></ul><p class="note">${r.g} · ${age(r.e)} · vive en ${r.d} · postuló por ${r.k}</p>`)}
-  return card(`<h2>${head}</h2><p class="note">Son candidatos alternativos quienes no fueron contratados ni rechazados. Se muestran hasta tres por cargo, ordenados por su puntaje en el test RISC, que mide habilidad cognitiva, personalidad y motivación. El puntaje va de 0 a 100: la habilidad cognitiva pesa 62,5% y la motivación 37,5%; la personalidad no suma puntos porque ningún cargo define un perfil preferido.</p>${groups}${det}`);
-}
-
-/* ---------- Consultas */
-function groupBars(groups,N,legend){
-  const mx=Math.max(...groups.map(g=>g.rows.length));
-  return `<div class="legend"><span><i style="background:var(--blue)"></i>${legend[0]}</span><span><i class="rest"></i>${legend[1]}</span></div><div class="bars">${groups.map(g=>{const n=g.rows.length,a=g.hi.length;
-    return `<button class="row wide" type="button" data-sel="q:${esc(g.id)}" aria-pressed="${sel==='q:'+g.id}"><span class="lab">${esc(g.label)}</span><span class="track" style="width:${Math.max(n/mx*100,14)}%">${a?`<span class="bar" style="flex:${a} 1 0">${a}</span>`:''}${n-a?`<span class="bar rest" style="flex:${n-a} 1 0">${n-a}</span>`:''}</span><span class="val">${g.text}</span></button>`}).join('')}</div>`;
-}
-function vConsultas(d){
-  const N=d.length,H=d.filter(r=>r.h).length;
-  const ctl=seg('cons',[['tiempos','Tiempos'],['canales','Canales'],['rechazos','Rechazos'],['reclutadores','Reclutadores'],['test','Test RISC']],true);
-  let head,chart,det=hint('Toque una barra para ver los nombres.'),note='';
-  const q=sel.startsWith('q:')?sel.slice(2):null;
-  if(view.cons==='tiempos'){
-    const t=d.filter(r=>r.f),steps=[];
-    for(let k=0;k<7;k++){const rs=t.filter(r=>r.f[k]&&r.f[k+1]).map(r=>({r,v:days(r.f[k],r.f[k+1])}));steps.push({k,l:`De ${ST[k]} a ${ST[k+1]}`,rs,m:rs.length?mean(rs.map(x=>x.v)):0})}
-    const val=steps.filter(s=>s.rs.length),hh=d.filter(r=>r.h&&r.x!=null).map(r=>r.x);
-    if(!val.length){head='No hay fechas suficientes con estos filtros';chart='<p class="empty">Cambie los filtros o toque «Limpiar».</p>';det=''}
-    else{const w=val.reduce((a,b)=>b.m>a.m?b:a),mx=w.m||1;
-      head=`${hh.length?`Contratar toma ${nf(mean(hh))} días en promedio. `:''}El paso más lento es de ${w.l.slice(3)}: ${nf(w.m)} días`;
-      chart=`<div class="bars">${steps.map(s=>s.rs.length?`<button class="row wide" type="button" data-sel="q:${s.k}" aria-pressed="${q===String(s.k)}"><span class="lab">${s.l}</span><span class="track"><span class="bar slim ${s===w?'worst':''}" style="flex:0 0 ${Math.max(s.m/mx*100,1.5)}%"></span></span><span class="val"><b>${nf(s.m)} días</b> en promedio · ${pl(s.rs.length,'caso','casos')}${s===w?' <span class="pill rej">Más lento</span>':''}</span></button>`:`<div class="row wide" style="cursor:default"><span class="lab">${s.l}</span><span class="val">Sin casos</span></div>`).join('')}</div>`;
-      note=`<p class="note">Promedio de días entre una etapa y la siguiente.${hh.length?` El promedio hasta contratar se basa en ${pl(hh.length,'contratación','contrataciones')} con fecha registrada.`:''}</p>`;
-      const s=q!=null&&steps[+q];if(s&&s.rs.length)det=detail(`${s.l}: ${nf(s.m)} días en promedio`,people([...s.rs].sort((a,b)=>b.v-a.v||byName(a.r,b.r)).map(x=>Object.assign({},x.r,{_v:x.v})),r=>r.c,r=>`<span class="n">${pl(r._v,'día','días')}</span>`))}
-  }else if(view.cons==='canales'||view.cons==='reclutadores'){
-    const key=view.cons==='canales'?'k':'r',gs=desc(cnt(d,key)).map(([id,n])=>{const rows=d.filter(r=>r[key]===id),hi=rows.filter(r=>r.h),op=rows.filter(r=>r.s==='En proceso').length;
-      return {id,label:id,rows,hi,op,text:`<b>${hi.length}</b> ${hi.length===1?'contratado':'contratados'} de ${pl(n,'postulante','postulantes')} (${pc(hi.length,n)})${key==='r'&&op?` · ${op} en proceso`:''}`}});
-    const tp=gs[0],th=[...gs].sort((a,b)=>b.hi.length-a.hi.length)[0],P=d.filter(r=>r.s==='En proceso').length,to=[...gs].sort((a,b)=>b.op-a.op)[0];
-    if(key==='k')head=gs.length===1?`${tp.label}: ${tp.hi.length} ${tp.hi.length===1?'contratado':'contratados'} de ${pl(tp.rows.length,'postulante','postulantes')}`:`${tp.label} trae más postulantes (${tp.rows.length} de ${N})${H?th===tp?` y más contratados (${th.hi.length} de ${H})`:`; ${th.label} trae más contratados (${th.hi.length} de ${H})`:''}`;
-    else head=gs.length===1?`${tp.label}: ${tp.hi.length} ${tp.hi.length===1?'contratado':'contratados'} de ${pl(tp.rows.length,'postulante','postulantes')}`:`${tp.label} atendió a más postulantes (${tp.rows.length} de ${N})${P&&to.op>1?`; ${to.label} tiene ${to.op} de los ${P} procesos abiertos`:''}`;
-    chart=groupBars(gs,N,['Contratados','No contratados']);
-    note=H<10?`<p class="note">Basado en ${pl(H,'contratado','contratados')}: la diferencia entre ${key==='k'?'canales':'reclutadores'} equivale a una sola contratación.</p>`:'';
-    const g=q!=null&&gs.find(x=>x.id===q);if(g)det=detail(`${esc(g.label)}: ${pl(g.rows.length,'postulante','postulantes')}`,people([...g.rows].sort((a,b)=>(b.h-a.h)||a.s.localeCompare(b.s,'es')||byName(a,b)),r=>r.c));
-  }else if(view.cons==='rechazos'){
-    const rj=d.filter(r=>r.s==='Rechazado'),R=rj.length;
-    if(!R){head='No hay rechazados con estos filtros';chart='<p class="empty">Cambie los filtros o toque «Limpiar».</p>';det=''}
-    else{const m=desc(cnt(rj,'m')),mx=m[0][1];
-      head=`El motivo de rechazo más frecuente es «${m[0][0]}»: ${of(mx,R,'rechazado','rechazados')}`;
-      chart=`<div class="bars">${m.map(([k,n])=>`<button class="row wide" type="button" data-sel="q:${esc(k)}" aria-pressed="${q===k}"><span class="lab">${esc(k)}</span><span class="track"><span class="bar" style="flex:0 0 ${n/mx*100}%">${n}</span></span><span class="val"><b>${n}</b> de ${R} rechazados (${pc(n,R)})</span></button>`).join('')}</div>`;
-      note=few(R);
-      const g=q!=null&&m.find(x=>x[0]===q);if(g)det=detail(`${esc(g[0])}: ${pl(g[1],'persona','personas')}`,people(rj.filter(r=>r.m===g[0]).sort((a,b)=>b.t-a.t||byName(a,b)),r=>`${r.c} · llegó hasta ${ST[r.t-1]}`,r=>''))}
-  }else{
-    const G=[['alto','Puntaje alto (82 o más)',r=>r.p>=82],['medio','Puntaje medio (67 a 81)',r=>r.p>=67&&r.p<82],['bajo','Puntaje bajo (66 o menos)',r=>r.p<67]];
-    const gs=G.map(([id,label,f])=>{const rows=d.filter(f),hi=rows.filter(r=>r.t>=4),hn=rows.filter(r=>r.h).length;return {id,label,rows,hi,text:`<b>${hi.length}</b> de ${rows.length} llegaron a entrevistas (${pc(hi.length,rows.length)}) · ${hn===1?'1 contratado':hn+' contratados'}`}}).filter(g=>g.rows.length);
-    const al=gs.find(g=>g.id==='alto'),rest=gs.filter(g=>g.id!=='alto'),better=al&&rest.every(g=>al.hi.length/al.rows.length>g.hi.length/g.rows.length);
-    head=!al?'Ningún postulante con puntaje alto en esta selección':rest.length&&!better?`Un puntaje alto en el test no asegura avanzar: ${al.hi.length} de ${pl(al.rows.length,'postulante','postulantes')} con puntaje alto ${al.hi.length===1?'llegó':'llegaron'} a entrevistas (${pc(al.hi.length,al.rows.length)})`:`${al.hi.length} de ${pl(al.rows.length,'postulante','postulantes')} con puntaje alto ${al.hi.length===1?'llegó':'llegaron'} a entrevistas (${pc(al.hi.length,al.rows.length)})`;
-    chart=groupBars(gs,N,['Llegaron a entrevistas','No llegaron']);
-    note=`<p class="note">Puntaje del test RISC, de 0 a 100; se explica en la pestaña Candidatos alternativos.</p>`;
-    const g=q!=null&&gs.find(x=>x.id===q);if(g)det=detail(`${g.label}: ${pl(g.rows.length,'postulante','postulantes')}`,people([...g.rows].sort((a,b)=>b.t-a.t||b.p-a.p||byName(a,b)),r=>`${r.p} puntos · llegó hasta ${ST[r.t-1]}`));
-  }
-  return card(`<h2>${head}</h2>${ctl}${chart}${note}${det}`)+`<details class="recs" id="recs"${view.rec?' open':''}><summary>Recomendaciones<span></span></summary><ol>${RECS.map(([t,p],i)=>`<li><i>${i+1}</i><b>${t}</b><p>${p}</p></li>`).join('')}</ol><p class="note">Ordenadas por prioridad. Se basan en los 40 postulantes del proceso, sin filtros.</p></details>`;
-}
-const RECS=[
- ['Cubrir los dos cargos que quedaron sin contratado','Gerente Comercial y Oficial de Créditos, 2 de los 8 cargos, no tienen contratado. Retomar a Eliot Arnau Moreno para Gerente Comercial y a Maria Isabel Aligué Bonvehí o Lluís Zambudio Figuls para Oficial de Créditos.'],
- ['Definir los 7 procesos que siguen abiertos','7 de 40 postulantes (18%) siguen en proceso; 6 están detenidos en Evaluación y 4 los lleva Diego Torrez. Conviene cerrarlos antes de abrir nuevas convocatorias.'],
- ['Publicar los requisitos de cada cargo en la convocatoria','10 de 40 postulantes (25%) no pasan de la Aplicación, 6 de ellos por no cumplir requisitos en el filtro inicial. Con los requisitos a la vista postula quien califica.'],
- ['Consultar al supervisor antes de las entrevistas','El supervisor descartó a 5 candidatos por no cumplir requisitos recién en su entrevista, después de que pasaron por todas las etapas previas.'],
- ['Fijar un plazo para presentar la oferta','De la entrevista con el supervisor a la oferta pasan 2,8 días en promedio y hasta 6 (basado en 6 casos). Es el paso más lento de un proceso que contrata en 10,6 días (basado en 5 casos).'],
- ['Difundir las convocatorias fuera de La Paz y Cochabamba','28 de 40 postulantes (70%) viven en esos dos departamentos y 4 de los 9 departamentos no tienen ninguno.'],
- ['Definir para qué se usa el test RISC','De 12 postulantes con puntaje alto se contrató a 1; de 14 con puntaje bajo, a 3. Fijar por cargo qué puntaje se exige o dejar de aplicarlo.']];
-
-/* ---------- armado */
-const VIEWS={resumen:vResumen,postulantes:vPostulantes,donde:vDonde,proceso:vProceso,contratados:vContratados,alternativos:vAlternativos,consultas:vConsultas};
-const OPTS={c:desc(cnt(ROWS,'c')).map(x=>x[0]).sort((a,b)=>a.localeCompare(b,'es')),g:GEN.map(g=>g[0]),d:DEPS,k:desc(cnt(ROWS,'k')).map(x=>x[0])};
-function chrome(d){
-  document.querySelectorAll('.tab').forEach(b=>b.setAttribute('aria-selected',b.dataset.tab===tab?'true':'false'));
-  $('panel').setAttribute('aria-labelledby','t-'+tab);
-  for(const k in OPTS){const s=$('f-'+k);s.value=filt[k];s.classList.toggle('on',!!filt[k])}
-  const act=Object.keys(filt).filter(k=>filt[k]);
-  $('fstate').innerHTML=act.length?`<span><b>${d.length} de 40 postulantes</b> con:</span>${act.map(k=>`<span class="pill x">${esc(filt[k])}<button type="button" data-clear="${k}" aria-label="Quitar filtro ${esc(filt[k])}">×</button></span>`).join('')}<button class="btn ghost" type="button" data-clear="all">Limpiar</button>`:`<span><b>40 postulantes</b> · sin filtros</span>`;
-}
-function render(focus){
-  const d=data();chrome(d);
-  $('panel').innerHTML=d.length?VIEWS[tab](d):noData();
-  if(focus){const el=$('detail');if(el){el.focus({preventScroll:true});el.scrollIntoView({block:'nearest',behavior:'smooth'})}}
-}
-function go(t){tab=t;sel='';render();try{history.replaceState(null,'','#'+t)}catch(_){}
-  const y=$('tabs').parentElement.getBoundingClientRect().top+window.scrollY;if(window.scrollY>y)window.scrollTo({top:y});
-  const b=$('t-'+t);if(b&&b.scrollIntoView)b.scrollIntoView({block:'nearest',inline:'center'})}
-function setup(){
-  $('tabs').innerHTML=TABS.map(([k,l])=>`<button class="tab" role="tab" id="t-${k}" data-tab="${k}" type="button">${l}</button>`).join('');
-  $('tabs').addEventListener('click',e=>{const b=e.target.closest('.tab');if(b)go(b.dataset.tab)});
-  for(const k in OPTS){const s=$('f-'+k);s.innerHTML=`<option value="">${FALL[k]}</option>`+OPTS[k].map(o=>`<option value="${esc(o)}">${esc(o)}</option>`).join('');
-    s.addEventListener('change',()=>{filt[k]=s.value;sel='';render()})}
-  $('fstate').addEventListener('click',e=>{const b=e.target.closest('[data-clear]');if(!b)return;if(b.dataset.clear==='all'){for(const k in filt)filt[k]=''}else filt[b.dataset.clear]='';sel='';render()});
-  $('panel').addEventListener('click',e=>{const t=e.target.closest('[data-go],[data-sel],[data-set]');if(!t)return;
-    if(t.dataset.go)return go(t.dataset.go);
-    if(t.dataset.set!=null){const i=t.dataset.set.indexOf('='),k=t.dataset.set.slice(0,i),v=t.dataset.set.slice(i+1);view[k]=v;sel='';
-      if(k==='who'){view.seg=v==='hired'?'genero':'cargo';view.hi=''}if(k==='seg')view.hi='';return render()}
-    const v=t.dataset.sel;sel=sel===v?'':v;render(!!sel)});
-  $('panel').addEventListener('keydown',e=>{if((e.key==='Enter'||e.key===' ')&&e.target.matches('path[data-sel]')){e.preventDefault();e.target.dispatchEvent(new MouseEvent('click',{bubbles:true}))}});
-  $('panel').addEventListener('toggle',e=>{if(e.target.id==='recs')view.rec=e.target.open},true);
-  const h=(location.hash||'').slice(1);if(TABS.some(t=>t[0]===h))tab=h;
-}
-setup();render();
+(async()=>{
+  let user=null;
+  try{if(window.claude&&window.claude.use){db=await window.claude.use('db');user=await window.claude.use('user')}}catch(_){db=null}
+  if(db){
+    mode='db';col=db.collection('postulaciones');
+    status('Los registros se guardan en la base de datos de esta página','ok');
+    let admin=true;try{if(user){const a=await user.canEdit();if(a===false)admin=false}}catch(_){}
+    if(admin){$('panel').hidden=false;
+      col.onSnapshot(s=>{docs=s.docs.map(x=>Object.assign({_id:x.id},x.data())).sort((a,b)=>String(b.creado||'').localeCompare(String(a.creado||'')));renderList()},()=>{status('Se perdió la conexión con la base de datos. Recarga la página.','bad')});
+    }else status('Tu cuenta puede ver el formulario pero no registrar. Pide acceso de editor a RR.HH.','warn');
+  }else if(ENDPOINT){mode='endpoint';status('Los registros se guardan en la hoja de cálculo de RR.HH.','ok')}
+  else{mode='none';status('Este enlace no guarda registros: abre la página con una cuenta autorizada','warn');$('send').disabled=true}
+})();
 </script>
+
 </body></html>
